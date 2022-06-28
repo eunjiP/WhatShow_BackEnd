@@ -1,6 +1,8 @@
-# Final-project
+Final-project
+=====
 
-- 주제 : 
+주제
+------
 - 사용언어 : PHP, JavaScript, Python
 - 사용 IDE : Visual Studio Code
 - DB 설계 tool : MySQL Workbench
