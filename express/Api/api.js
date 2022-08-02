@@ -2,7 +2,7 @@ const express = require('express'); //express import
 const app = express(); 
 const uuidAPIKey = require('uuid-apikey'); //uuid 생성 npm import
 
-const server = app.listen(3001, () => { //백엔드 서버 연결, 성공시 콘솔 출력
+const server = app.listen(3001, () => { //백엔드 서버 연결, 성공시 콘솔 출력 //내용 변경 ㄱㄱㄱ
     console.log('Start Server : localhost:3001');
 });
 
