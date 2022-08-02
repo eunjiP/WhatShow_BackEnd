@@ -1,8 +1,9 @@
+//참고글 : https://velog.io/@gwak2837/Node.js-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C
 //백엔드 서버 키는법, 터미널에서 node api.js 입력
 
-const express = require('express'); //express import
+const express = require('express'); //npm install된 express import
 const app = express(); 
-const uuidAPIKey = require('uuid-apikey'); //uuid 생성 npm import
+const uuidAPIKey = require('uuid-apikey'); //npm install된 uuid 생성패키지 import
 
 const server = app.listen(3001, () => { //백엔드 서버 연결, 성공시 콘솔 출력
     console.log('Start Server : localhost:3001');
@@ -16,7 +17,7 @@ const key = { //생성된 uuid 정의
 
 
 app.get('/api/movie/:apikey/:rank', async (req, res) => { 
-    //부메랑으로 http://localhost:3001/api/movie/부여받은 앱키/daily or weekly입력시 api 서버 연결
+    //부메랑으로 http://localhost:3001/api/movie/부여받은앱키/daily or weekly입력시 api 서버 연결
     let {
         apikey,
         rank
