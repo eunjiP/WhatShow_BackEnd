@@ -7,7 +7,7 @@ const uuidAPIKey = require('uuid-apikey'); //npm install된 uuid 생성패키지
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: '192.168.0.19',
+    host: 'localhost',
     user: 'root',
     password: '506greendg@',
     database: 'whatshow' 
@@ -35,9 +35,9 @@ app.get('/api/movie/:apikey/:rank', async (req, res) => {
     if(!uuidAPIKey.isAPIKey(apikey) || !uuidAPIKey.check(apikey, key.uuid)){ //api키를 체크 틀리면 오류, 맞으면 보여줌
         res.send('apikey is not valid.');
     } else {
-        if(rank == 'computer'){
+        if(rank == 'daily'){
             connection.connect();//DB 커넥션
-            connection.query('SELECT * from t_category WHERE cate2="컴퓨터"', (error, rows, fields) => {
+            connection.query('SELECT * from t_boxoffice WHERE boxoffice_date="20220713"', (error, rows, fields) => {
                 if (error) throw error;
                 console.log('User info is : ', rows);
                 res.send(rows);
