@@ -7,10 +7,10 @@ const uuidAPIKey = require('uuid-apikey'); //npm install된 uuid 생성패키지
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: '192.168.0.19',
     user: 'root',
     password: '506greendg@',
-    database: 'shop' 
+    database: 'whatshow' 
 });
 
 const server = app.listen(3001, () => { //백엔드 서버 만듬, 성공시 콘솔 출력
