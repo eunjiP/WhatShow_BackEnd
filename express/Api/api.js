@@ -5,7 +5,15 @@ const express = require('express'); //npm install된 express import
 const app = express(); 
 const uuidAPIKey = require('uuid-apikey'); //npm install된 uuid 생성패키지 import
 
-const server = app.listen(3001, () => { //백엔드 서버 연결, 성공시 콘솔 출력
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '506greendg@',
+    database: 'shop' 
+});
+
+const server = app.listen(3001, () => { //백엔드 서버 만듬, 성공시 콘솔 출력
     console.log('Start Server : localhost:3001');
 });
 
@@ -27,24 +35,24 @@ app.get('/api/movie/:apikey/:rank', async (req, res) => {
     if(!uuidAPIKey.isAPIKey(apikey) || !uuidAPIKey.check(apikey, key.uuid)){ //api키를 체크 틀리면 오류, 맞으면 보여줌
         res.send('apikey is not valid.');
     } else {
-        if(rank == 'daily'){
-            let data = [//임시로 만든 객체, 차후 DB랑 연동해서 크롤링한 내용 보여줌
-                {title:"한산:용의 출현", release:"2022-07-27", sales:"23,394,725,692"},
-                {title:"미니언즈2", release:"2022-07-20", sales:"14,691,881,707"},
-                {title:"탑건:매버릭", release:"2022-06-22", sales:"75,252,574,786"},
-                {title:"외계+인 1부", release:"2022-07-20", sales:"14,200,700,032"},
-                {title:"뽀로로 극장판 드래곤캐슬 대모험", release:"2022-07-28", sales:"1,634,845,635"}
-            ];
-            res.send(data);
-        } else if (rank == 'weekly'){
-            let data = [
-                {title:"한산:용의 출현", release:"2022-07-27", sales:"23,394,725,692"},
-                {title:"미니언즈2", release:"2022-07-20", sales:"14,691,881,707"},
-                {title:"탑건:매버릭", release:"2022-06-22", sales:"75,252,574,786"},
-                {title:"외계+인 1부", release:"2022-07-20", sales:"14,200,700,032"},
-                {title:"뽀로로 극장판 드래곤캐슬 대모험", release:"2022-07-28", sales:"1,634,845,635"}
-            ]
-            res.send(data);
+        if(rank == 'computer'){
+            connection.connect();//DB 커넥션
+            connection.query('SELECT * from t_category WHERE cate2="컴퓨터"', (error, rows, fields) => {
+                if (error) throw error;
+                console.log('User info is : ', rows);
+                res.send(rows);
+                connection.end();
+            });
+            
+            
+        } else if (rank == 'appliances'){
+            connection.connect();//DB 커넥션
+            connection.query('SELECT * from t_category WHERE cate2="가전제품"', (error, rows, fields) => {
+                if (error) throw error;
+                console.log('User info is : ', rows);
+                res.send(rows);
+                connection.end();
+            });
         } else {
                 res.send('error');
             }
