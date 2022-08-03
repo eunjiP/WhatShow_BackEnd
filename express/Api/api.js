@@ -46,7 +46,7 @@ app.get('/api/movie/:apikey/:rank', async (req, res) => {
             
             
         } else if (rank == 'appliances'){
-            connection.connect();//DB 커넥션
+            connection.connect();//DB 커넥션//
             connection.query('SELECT * from t_category WHERE cate2="가전제품"', (error, rows, fields) => {
                 if (error) throw error;
                 console.log('User info is : ', rows);
