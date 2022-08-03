@@ -1,3 +1,5 @@
+//express기반 백엔드 운용
+
 const express = require('express');
 const app = express();
 
@@ -9,7 +11,7 @@ const server = app.listen(3000, () => {
 app.set('views', __dirname + '/views'); 
 app.set('view engine', 'ejs'); 
 
-//엔진을 ejs사용, 자세한 내용은 ejs 내용 검색
+//엔진을 ejs(npm)사용, 자세한 내용은 ejs 내용 검색
 app.engine('html', require('ejs').renderFile);
 app.engine('php', require('ejs').renderFile);
 
