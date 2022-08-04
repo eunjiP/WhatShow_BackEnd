@@ -37,7 +37,8 @@ app.get('/api/movie/:apikey/:rank', async (req, res) => {
     } else {
         if(rank == 'daily'){
             connection.connect();//DB 커넥션
-            connection.query('SELECT * from t_boxoffice WHERE boxoffice_date="20220713"', (error, rows, fields) => {
+            let data = rank
+            connection.query('SELECT * from t_boxoffice WHERE boxoffice_date=data', (error, rows, fields) => {
                 if (error) throw error;
                 console.log('User info is : ', rows);
                 res.send(rows);
