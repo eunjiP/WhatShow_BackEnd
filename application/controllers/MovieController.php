@@ -3,8 +3,12 @@ namespace application\controllers;
 use application\libs\Application;
 
 class MovieController extends Controller {
+    public function index() {        
+        $this->addAttribute(_MAIN, $this->getView("movie/index.php"));
+        return "template/t1.php";
+    }
 
-    function main() {
+    public function main() {
         switch(getMethod()) {
             case _GET:
                 return [_RESULT => $this->model->selList()];
