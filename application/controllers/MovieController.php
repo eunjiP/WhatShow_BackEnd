@@ -11,7 +11,7 @@ class MovieController extends Controller {
     public function main() {
         switch(getMethod()) {
             case _GET:
-                return [_RESULT => $this->model->selList()];
+                return $this->model->selList();
             case _POST:
 
         }
