@@ -19,12 +19,12 @@ class LocationController extends Controller {
         return $this->model->LocationList($param);
     }
 
-    public function option1List() {
-        return $this->model->option1List();
+    public function optionList1() {
+        return $this->model->optionList1();
     }
 
-    public function option2List() {
-        return $this->model->option2List();
+    public function optionList2() {
+        return $this->model->optionList2();
     }
 
 
