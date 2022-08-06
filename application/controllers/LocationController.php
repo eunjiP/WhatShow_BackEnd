@@ -24,7 +24,11 @@ class LocationController extends Controller {
     }
 
     public function optionList2() {
-        return $this->model->optionList2();
+        $json = getUrlPaths();
+        $param = [
+            'root_code' => end($json)
+        ];
+        return $this->model->optionList2($param);
     }
 
 

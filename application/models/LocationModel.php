@@ -28,7 +28,7 @@ class LocationModel extends Model {
     // 카테고리 optionList 설정
     public function optionList1() {
         $sql =
-        "   SELECT region_nm AS optionList1 FROM region_code ";
+        "   SELECT *  FROM region_code ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -36,14 +36,13 @@ class LocationModel extends Model {
 
     public function optionList2(&$param) {
         $sql = 
-        "  SELECT t1.sub_nm AS optionList2
-            FROM subregion_code t1
-            INNER JOIN region_code t2 
-            WHERE t1.root_code = :t1.root_code
-            AND t2.root_code = t1.root_code       
+        "   SELECT A.* FROM subregion_code A
+            INNER JOIN region_code B 
+            ON A.root_code = B.root_code
+            WHERE A.root_code = :root_code 
         ";
         $stmt = $this->pdo->prepare($sql);
-        $stmt-> bindValue(":t1.root_code", $param["t1.root_code"]);
+        $stmt-> bindValue(":root_code", $param["root_code"]);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
