@@ -35,4 +35,13 @@ class MovieModel extends Model {
 
     //가지고 온 박스오피스의 영화정보가 DB 안에 있는지 확인하는 함수
     
+    
+    //tag 들고오는 함수
+    public function getTag() {
+        $sql = "SELECT movie_genre FROM t_movies
+                GROUP BY movie_genre";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }
