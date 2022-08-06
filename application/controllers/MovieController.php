@@ -17,8 +17,36 @@ class MovieController extends Controller {
         }
     }
 
-    public function boxOffiece() {
-        
+    public function boxOffice() {
+        $key = '9327301d882811904d8caa4ab3d63bb6';
+        $targetDt = '20220805';
+        $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
+        $is_post = false;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $is_post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $res = curl_exec($ch);
+        $stat = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        if($stat === 200) {
+            $re_res = json_decode($res, true);
+            $re_res = $re_res['boxOfficeResult']['dailyBoxOfficeList'];
+            $param = [
+                'date' => $targetDt
+            ];
+            for ($i=0; $i < count($re_res); $i++) { 
+                $param[$re_res[$i]['rank']] = $re_res[$i]['movieNm'];
+            }
+            return $this->model->insBoxoffice($param);
+        } else {
+            echo "Error 내용 : " . $res;
+        }
     }
 
 }
