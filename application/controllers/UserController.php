@@ -3,6 +3,17 @@ namespace application\controllers;
 use application\libs\Application;
 
 class UserController extends Controller{
+    public function sel_user(){
+        $url = getUrlPaths();
+        $param = [
+            'uuid' => $url[2],
+            'nickname' => $url[3]
+        ];
+        $result = $this->model->sel_user($param);
+        
+        
+    }
+
     public function signup(){
         $json = getJson();
         $param = [
