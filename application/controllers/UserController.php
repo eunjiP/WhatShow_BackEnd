@@ -6,12 +6,10 @@ class UserController extends Controller{
     public function sel_user(){
         $url = getUrlPaths();
         $param = [
-            'uuid' => $url[2],
-            'nickname' => $url[3]
+            'uuid' => $url[2]
         ];
         $result = $this->model->sel_user($param);
-        
-        
+        return [_RESULT => $result];
     }
 
     public function signup(){
