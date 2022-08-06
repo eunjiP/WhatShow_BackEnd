@@ -3,7 +3,11 @@
 
     class DetailController extends Controller {
         public function reviewList() {
-            $json = getJson();
+            $url = getUrlPaths();
+            if(!isset($url[2])) {
+                exit();
+            }
+            $param = [ 'movie_code' => $url[2]];
             return $this->model->getReviewList($param); 
         }
     }
