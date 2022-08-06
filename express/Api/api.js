@@ -1,19 +1,31 @@
-const express = require('express'); //express import
-const app = express(); 
-const uuidAPIKey = require('uuid-apikey'); //uuid 생성 npm import
+//참고글 : https://velog.io/@gwak2837/Node.js-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C
+//백엔드 서버 키는법, 터미널에서 node api.js 입력
 
-const server = app.listen(3001, () => { //백엔드 서버 연결, 성공시 콘솔 출력
+const express = require('express'); //npm install된 express import
+const app = express(); 
+const uuidAPIKey = require('uuid-apikey'); //npm install된 uuid 생성패키지 import
+
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '506greendg@',
+    database: 'whatshow' 
+});
+
+const server = app.listen(3001, () => { //백엔드 서버 만듬, 성공시 콘솔 출력
     console.log('Start Server : localhost:3001');
 });
 
-const key = { //uuid 확인
+//console.log(uuidAPIKey.create()); uuid키 생성(테스트라 콘솔로 출력했음, 직접 사용시 DB랑 연결해야됨)
+const key = { //생성된 uuid 정의
     apiKey: 'N624RC7-G5647YE-MKQVWZE-9N1P8A9',
-  uuid: 'a9844c30-814c-43f9-a4ef-be7d4d436429'
+    uuid: 'a9844c30-814c-43f9-a4ef-be7d4d436429'
 }
 
-//console.log(uuidAPIKey.create()); uuid키 생성
 
-app.get('/api/movie/:apikey/:rank', async (req, res) => {
+app.get('/api/movie/:apikey/:rank', async (req, res) => { 
+    //부메랑으로 http://localhost:3001/api/movie/부여받은앱키/daily or weekly입력시 api 서버 연결
     let {
         apikey,
         rank
@@ -24,23 +36,24 @@ app.get('/api/movie/:apikey/:rank', async (req, res) => {
         res.send('apikey is not valid.');
     } else {
         if(rank == 'daily'){
-            let data = [
-                {title:"한산:용의 출현", release:"2022-07-27", sales:"23,394,725,692"},
-                {title:"미니언즈2", release:"2022-07-20", sales:"14,691,881,707"},
-                {title:"탑건:매버릭", release:"2022-06-22", sales:"75,252,574,786"},
-                {title:"외계+인 1부", release:"2022-07-20", sales:"14,200,700,032"},
-                {title:"뽀로로 극장판 드래곤캐슬 대모험", release:"2022-07-28", sales:"1,634,845,635"}
-            ];
-            res.send(data);
-        } else if (rank == 'weekly'){
-            let data = [
-                {title:"한산:용의 출현", release:"2022-07-27", sales:"23,394,725,692"},
-                {title:"미니언즈2", release:"2022-07-20", sales:"14,691,881,707"},
-                {title:"탑건:매버릭", release:"2022-06-22", sales:"75,252,574,786"},
-                {title:"외계+인 1부", release:"2022-07-20", sales:"14,200,700,032"},
-                {title:"뽀로로 극장판 드래곤캐슬 대모험", release:"2022-07-28", sales:"1,634,845,635"}
-            ]
-            res.send(data);
+            connection.connect();//DB 커넥션
+            let data = rank
+            connection.query('SELECT * from t_boxoffice WHERE boxoffice_date=data', (error, rows, fields) => {
+                if (error) throw error;
+                console.log('User info is : ', rows);
+                res.send(rows);
+                connection.end();
+            });
+            
+            
+        } else if (rank == 'appliances'){
+            connection.connect();//DB 커넥션//
+            connection.query('SELECT * from t_category WHERE cate2="가전제품"', (error, rows, fields) => {
+                if (error) throw error;
+                console.log('User info is : ', rows);
+                res.send(rows);
+                connection.end();
+            });
         } else {
                 res.send('error');
             }
