@@ -7,7 +7,7 @@ class UserModel extends Model{
         $sql = "INSERT INTO t_user
         (uuid, nickname)
         VALUES
-        (':uuid', ':nickname')";
+        (:uuid, :nickname)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":uuid", $param["uuid"]);
         $stmt->bindValue(":nickname", $param["nickname"]);
