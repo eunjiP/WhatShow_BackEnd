@@ -3,6 +3,7 @@
     use PDO;
 
     class DetailModel extends Model {
+        // 각 영화에 대한 리뷰 리스트
         public function getReviewList(&$param) {
             $sql = 
             "   SELECT * FROM t_review
