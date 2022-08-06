@@ -49,4 +49,33 @@ class MovieController extends Controller {
         }
     }
 
+    //영화 시간 통신하는 api
+    public function movieTime() {
+        //영화코드
+        $code = '191634';
+        //지역코드
+        $regionRootCode = '10';
+        //조회하는 시간
+        $reserveDate = '2022-08-06';
+
+        $url = 'https://movie.naver.com/movie/bi/mi/runningJson.naver?code=' . $code . '&regionRootCode=' . $regionRootCode . '&reserveDate=' . $reserveDate;
+        $is_post = false;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $is_post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $res = curl_exec($ch);
+        $stat = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if($stat === 200) {
+            $res = json_decode($res, true);
+            print_r($res['groupScheduleList']);
+        } else {
+            echo "Error 내용 : " . $res;
+        }
+    }
 }
