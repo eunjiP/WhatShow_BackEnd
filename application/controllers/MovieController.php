@@ -80,4 +80,18 @@ class MovieController extends Controller {
             echo "Error 내용 : " . $res;
         }
     }
+
+    public function getTag() {
+        $result = json_decode(json_encode($this->model->getTag()), true);
+        $arr = [];
+        for ($i=0; $i < count($result); $i++) { 
+            $genre = $result[$i]['movie_genre'];
+            $genre = explode(',', $genre);
+            for ($j=0; $j < count($genre); $j++) { 
+                array_push($arr, $genre[$j]);
+            }
+        }
+        $arr = array_unique($arr, SORT_REGULAR);
+        return $arr;
+    }
 }
