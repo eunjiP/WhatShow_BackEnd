@@ -52,6 +52,7 @@ class MovieModel extends Model {
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    //영화 정보 입력 함수
     public function insMovies(&$param) {
         $sql = "INSERT INTO t_movies
         SET movie_code = :movie_code, movie_nm = :movie_nm, open_date = :open_date, movie_poster = :movie_poster";
