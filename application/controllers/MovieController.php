@@ -37,36 +37,49 @@ class MovieController extends Controller {
         if($stat === 200) {
             $re_res = json_decode($res, true);
             $re_res = $re_res['boxOfficeResult']['dailyBoxOfficeList'];
+            // print_r($re_res);
             $param = [
                 'date' => $targetDt
             ];
+
+            $movieCd = [];
             for ($i=0; $i < count($re_res); $i++) { 
                 $param[$re_res[$i]['rank']] = $re_res[$i]['movieNm'];
+                array_push($movieCd, $re_res[$i]['movieCd']);
             }
+            print_r($movieCd);
             // return $this->model->insBoxoffice($param);
             // if($this->model->insBoxoffice($param)) {
             if(1) {
                 for ($i=1; $i < count($param); $i++) { 
-                    $movie_result = $this->naverSearchApi($param[$i]);
+                    $movie_code = $this->naverSearchApi($param[$i]);
+                    print($movieCd[($i-1)]);
+                    $movie_result = $this->movieDetailApi($movieCd[($i-1)]);
+                    print_r($movie_result);
                     $movie_param = [
-                        'movie_code' => $movie_result['movie_code'],
+                        'movie_code' => $movie_code,
                         'movie_nm' => $param[$i],
-                        // 'movie_genre' => $re_res[$i-1]['genre'],
+                        'movie_genre' => $movie_result['genreNm'],
                         'open_date' => $re_res[$i-1]['openDt'],
-                        // 'country' => $re_res[$i-1]['country'],
-                        'movie_poster' => $movie_result['movie_img'],
+                        'country' => $movie_result['nationNm'],
+                        'movie_poster' => 'test',
+                        'director' => $movie_result['directors'],
+                        'actor' => $movie_result['actors'],
+                        'runing_time' => $movie_result['showTm'],
+                        'view_level' => $movie_result['watchGradeNm'],
                     ];
                     $result = $this->model->selMovies($movie_param);
                     if($result) {
                         print_r($result);
                     } else {
-                        print $this->model->insMovies($movie_param);
+                        print_r($movie_param);
+                        // print $this->model->insMovies($movie_param);
                     }
                     // if(!$this->model->selMovies($movie_param)) {
                     //     return $this->model->insMovies($movie_param);
                     // }
-                }
-            }
+                } 
+            } 
         } else {
             echo "Error 내용 : " . $res;
         }
@@ -144,17 +157,41 @@ class MovieController extends Controller {
             $re_res = json_decode($res, true);
             if($re_res['total'] > 0) {
                 $res_items = $re_res['items'][0];
-                $res_img = $res_items['image'];
+                // $res_img = $res_items['image'];
                 $res_link = explode('=', $res_items['link']);
                 $movie_code = end($res_link);
-                $result = [
-                    'movie_code' => $movie_code,
-                    'movie_img' => $res_img
-                ];
-                return $result;
+                // $result = [
+                //     'movie_code' => $movie_code,
+                //     'movie_img' => $res_img
+                // ];
+                return $movie_code;
             } else {
                 print "검색한 결과가 없습니다.";
             }
+        } else {
+            echo "Error 내용 : " . $res;
+        }
+    }
+
+    public function movieDetailApi() {
+        $key = 'de024e41172ba2b7f13cb5d286ad1162';
+        $movieCd = '20209343';
+        $url = " http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=" . $key . '&movieCd=' . $movieCd;
+        print($url);
+        $is_post = false;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $is_post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $res = curl_exec($ch);
+        $stat = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if($stat === 200) {
+            print_r($res);
         } else {
             echo "Error 내용 : " . $res;
         }
