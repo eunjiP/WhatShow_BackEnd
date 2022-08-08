@@ -29,9 +29,9 @@ class UserController extends Controller{
     public function upd_nick(){
         $url = getUrlPaths();
         $param = [
-            'uuid' => $url[2],
+            'nickname' => $url[2],
         ];
-        $result = $this->model->upd_user($param);
+        $result = $this->model->upd_nick($param);
         return [_RESULT => $result];
     }
 
