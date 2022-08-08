@@ -75,7 +75,7 @@ class MovieController extends Controller {
 
         if($stat === 200) {
             $res = json_decode($res, true);
-            print_r($res['groupScheduleList']);
+            return $res['groupScheduleList'];
         } else {
             echo "Error 내용 : " . $res;
         }
