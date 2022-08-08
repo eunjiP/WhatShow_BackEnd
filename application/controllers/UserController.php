@@ -25,4 +25,23 @@ class UserController extends Controller{
         }
         return [_RESULT => $result];
     }
+    //유저 닉네임 변경
+    public function upd_nick(){
+        $url = getUrlPaths();
+        $param = [
+            'nickname' => $url[2],
+        ];
+        $result = $this->model->upd_nick($param);
+        return [_RESULT => $result];
+    }
+
+    public function ins_fav(){
+        $url = getUrlPaths();
+        $param = [
+            'uuid' => $url[2],
+            'tag' => $url[3]
+        ];
+        $result = $this->model->ins_fav($param);
+        return [_RESULT => $result];
+    }
 }
