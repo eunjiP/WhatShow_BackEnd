@@ -54,13 +54,14 @@ class MovieController extends Controller {
         // //영화코드
         // $code = '191634';
         // //지역코드
-        $regionRootCode = '10';
+        $regionRootCode = $_GET['rootCode'];
+        $regionSubCode = $_GET['subCode'];
         // //조회하는 시간
         // $reserveDate = '2022-08-06';
         $code = $_GET['code'];
         $reserveDate = $_GET['date'];
 
-        $url = 'https://movie.naver.com/movie/bi/mi/runningJson.naver?code=' . $code . '&regionRootCode=' . $regionRootCode . '&reserveDate=' . $reserveDate;
+        $url = 'https://movie.naver.com/movie/bi/mi/runningJson.naver?code=' . $code . '&regionRootCode=' . $regionRootCode .'&regionSubCode=' . $regionSubCode . '&reserveDate=' . $reserveDate;
         $is_post = false;
 
         $ch = curl_init();
