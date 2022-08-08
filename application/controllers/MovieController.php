@@ -17,6 +17,7 @@ class MovieController extends Controller {
         }
     }
 
+    //영화진흥원의 박스오피스 TOP10
     public function boxOffice() {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
         $targetDt = '20220806';
@@ -59,9 +60,9 @@ class MovieController extends Controller {
                     $movie_param = [
                         'movie_code' => $movie_code,
                         'movie_nm' => $param[$i],
-                        'movie_genre' => $movie_result['genreNm'],
+                        'movie_genre' => $movie_result['genres'],
                         'open_date' => $re_res[$i-1]['openDt'],
-                        'country' => $movie_result['nationNm'],
+                        'country' => $movie_result['nations'],
                         'movie_poster' => 'test',
                         'director' => $movie_result['directors'],
                         'actor' => $movie_result['actors'],
@@ -72,12 +73,9 @@ class MovieController extends Controller {
                     if($result) {
                         print_r($result);
                     } else {
-                        print_r($movie_param);
-                        // print $this->model->insMovies($movie_param);
+                        // print_r($movie_param);
+                        print $this->model->insMovies($movie_param);
                     }
-                    // if(!$this->model->selMovies($movie_param)) {
-                    //     return $this->model->insMovies($movie_param);
-                    // }
                 } 
             } 
         } else {
@@ -119,6 +117,7 @@ class MovieController extends Controller {
         }
     }
 
+    //영화 태그
     public function getTag() {
         $result = json_decode(json_encode($this->model->getTag()), true);
         $arr = [];
@@ -133,6 +132,7 @@ class MovieController extends Controller {
         return $arr;
     }
 
+    //naver검색 api의 영화코드 받아오는 api
     public function naverSearchApi($keyword) {
         $query = urlencode($keyword);
         $url = "https://openapi.naver.com/v1/search/movie.json?query=" . $query;
@@ -174,11 +174,10 @@ class MovieController extends Controller {
         }
     }
 
-    public function movieDetailApi() {
+    //영화진흥원의 영화 상세 api
+    public function movieDetailApi($movieCd) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        $movieCd = '20209343';
-        $url = " http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=" . $key . '&movieCd=' . $movieCd;
-        print($url);
+        $url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=" . $key . '&movieCd=' . $movieCd;
         $is_post = false;
 
         $ch = curl_init();
@@ -192,7 +191,37 @@ class MovieController extends Controller {
         curl_close($ch);
 
         if($stat === 200) {
-            print_r($res);
+            $res = json_decode($res, true)['movieInfoResult']['movieInfo'];
+            $genres = '';
+            for ($i=0; $i < count($res['genres']); $i++) { 
+                $genres .= $res['genres'][$i]['genreNm'] ;
+                if($i !== count($res['genres'])-1) {
+                    $genres .= '/';
+                }
+            }
+            $res['nations'] = $res['nations'][0]['nationNm'];
+            $res['genres'] = $genres;
+
+            $directors = '';
+            for ($i=0; $i < count($res['directors']); $i++) { 
+                $directors .= $res['directors'][$i]['peopleNm'] ;
+                if($i !== count($res['directors'])-1) {
+                    $directors .= ',';
+                }
+            }
+            $res['directors'] = $directors;
+
+            $actors = '';
+            for ($i=0; $i < count($res['actors']); $i++) { 
+                $actors .= $res['actors'][$i]['peopleNm'] ;
+                if($i !== count($res['actors'])-1) {
+                    $actors .= ',';
+                }
+            }
+            $res['actors'] = $actors;
+            $res['watchGradeNm'] = $res['audits'][0]['watchGradeNm'];
+
+            return $res;
         } else {
             echo "Error 내용 : " . $res;
         }
