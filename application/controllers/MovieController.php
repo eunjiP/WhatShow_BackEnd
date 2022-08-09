@@ -50,7 +50,7 @@ class MovieController extends Controller {
             }
             print_r($movieCd);
             // return $this->model->insBoxoffice($param);
-            $this->model->insBoxoffice($param);
+            $result = $this->model->insBoxoffice($param);
             for ($i=1; $i < count($param); $i++) { 
                 $movie_code = $this->naverSearchApi($param[$i]);
                 print($movieCd[($i-1)]);
