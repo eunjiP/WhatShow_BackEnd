@@ -27,3 +27,4 @@
     define("_PUT", "PUT");
     define("_DELETE", "DELETE");
     
+    define("_IMG_PATH", "static/img");
