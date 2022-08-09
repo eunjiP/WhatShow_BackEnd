@@ -30,11 +30,22 @@ class UserController extends Controller{
         $url = getUrlPaths();
         $param = [
             'nickname' => $url[2],
+            'uuid' => $url[3]
         ];
         $result = $this->model->upd_nick($param);
         return [_RESULT => $result];
     }
+    //유저 favtag 셀렉트
+    public function sel_fav(){
+        $url = getUrlPaths();
+        $param = [
+            'uuid' => $url[2]
+        ];
+        $result = $this->model->sel_fav($param);
+        return [_RESULT => $result];
+    }
 
+    //유저 favtag 추가 및 업데이트
     public function ins_fav(){
         $url = getUrlPaths();
         $param = [
@@ -42,6 +53,17 @@ class UserController extends Controller{
             'tag' => $url[3]
         ];
         $result = $this->model->ins_fav($param);
+        return [_RESULT => $result];
+    }
+    
+    //유저 rootcode 업데이트
+    public function ins_rootcode(){
+        $url = getUrlPaths();
+        $param = [
+            'uuid' => $url[2],
+            'rootcode' => $url[3]
+        ];
+        $result = $this->model->ins_rootcode($param);
         return [_RESULT => $result];
     }
 }
