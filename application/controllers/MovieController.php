@@ -234,23 +234,17 @@ class MovieController extends Controller {
         return $this->model->selSearch($param);
     }
 
-    //상세페이지 평점 백엔드
-    public function movieScore() {
+    //상세페이지 평점 및 추천 관련 백엔드
+    public function movieScoreAndRecommend() {
         $param = [
-            'movie_code' => $_GET['movie_code']
+            'movie_code' => $_GET['movie_code'],
+            'iuser' => $_GET['iuser']
         ];
-        $result = $this->model->selMovieScore($param);
+        $result = $this->model->selMovieScoreAndRecommend($param);
         if($result) {
             return [_RESULT => $result];
         } 
         return [_RESULT => 0];
     }
 
-    //상세페이지 추천수 백엔드
-    public function recommendCount() {
-        $param = [
-            'movie_code' => $_GET['movie_code']
-        ];   
-        return [_RESULT => $this->model->selRecommend($param)];
-    }
 }
