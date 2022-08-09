@@ -20,7 +20,7 @@ class MovieController extends Controller {
     //영화진흥원의 박스오피스 TOP10
     public function boxOffice() {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        $targetDt = '20220806';
+        $targetDt = '20220808';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -50,8 +50,7 @@ class MovieController extends Controller {
             }
             print_r($movieCd);
             // return $this->model->insBoxoffice($param);
-            // if($this->model->insBoxoffice($param)) {
-            if(1) {
+            if($this->model->insBoxoffice($param)) {
                 for ($i=1; $i < count($param); $i++) { 
                     $movie_code = $this->naverSearchApi($param[$i]);
                     print($movieCd[($i-1)]);
