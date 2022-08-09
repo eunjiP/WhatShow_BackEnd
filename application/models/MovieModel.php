@@ -32,9 +32,6 @@ class MovieModel extends Model {
         $stmt->execute();
         return $stmt->rowCount();
     }
-
-    //가지고 온 박스오피스의 영화정보가 DB 안에 있는지 확인하는 함수
-    
     
     //tag 들고오는 함수
     public function getTag() {
@@ -43,5 +40,34 @@ class MovieModel extends Model {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+    
+    //가지고 온 박스오피스의 영화정보가 DB 안에 있는지 확인하는 함수
+    public function selMovies(&$param) {
+        $sql = "SELECT movie_code FROM t_movies
+        WHERE movie_nm = :movie_nm";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_nm", $param['movie_nm']);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    //영화 정보 입력 함수
+    public function insMovies(&$param) {
+        $sql = "INSERT INTO t_movies
+        SET movie_code = :movie_code, movie_nm = :movie_nm, movie_genre = :movie_genre, open_date = :open_date, country = :country, director = :director, actor = :actor, movie_poster = :movie_poster, runing_time = :runing_time, view_level = :view_level";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_code", $param['movie_code']);
+        $stmt->bindValue(":movie_nm", $param['movie_nm']);
+        $stmt->bindValue(":movie_genre", $param['movie_genre']);
+        $stmt->bindValue(":open_date", $param['open_date']);
+        $stmt->bindValue(":country", $param['country']);
+        $stmt->bindValue(":director", $param['director']);
+        $stmt->bindValue(":actor", $param['actor']);
+        $stmt->bindValue(":movie_poster", $param['movie_poster']);
+        $stmt->bindValue(":runing_time", $param['runing_time']);
+        $stmt->bindValue(":view_level", $param['view_level']);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }
