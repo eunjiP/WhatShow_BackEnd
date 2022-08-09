@@ -70,4 +70,17 @@ class MovieModel extends Model {
         $stmt->execute();
         return $stmt->rowCount();
     }
+
+    //키워드 입력시 영화 정보를 검색하는 함수
+    public function selSearch(&$param) {
+        $search = $param['keyword'];
+        $sql = "SELECT * FROM t_movies
+        WHERE movie_nm LIKE '%$search%' 
+        OR movie_genre LIKE '%$search%' 
+        OR director LIKE '%$search%' 
+        OR actor LIKE '%$search%'";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }
