@@ -224,4 +224,12 @@ class MovieController extends Controller {
             echo "Error 내용 : " . $res;
         }
     }
+
+    public function movieDetail() {
+        $json = getJson();
+        $param = [
+            'keyword' => str_replace(' ', '', $json['keyword'])
+        ];
+        return $this->model->selSearch($param);
+    }
 }
