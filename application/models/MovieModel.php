@@ -70,4 +70,19 @@ class MovieModel extends Model {
         $stmt->execute();
         return $stmt->rowCount();
     }
+
+    // 영화 정보 추가_줄거리
+    public function MovieSummary(&$param) {
+        $sql = 
+        "   INSERT INTO t_movies
+            (movie_summary)
+            VALUES 
+            (:movie_summary)
+            WHERE movie_code = :movie_code
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_summary", $param["movie_summary"]);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }

@@ -224,4 +224,17 @@ class MovieController extends Controller {
             echo "Error 내용 : " . $res;
         }
     }
+
+    // 영화 줄거리
+    public function MovieSummary() {
+        // $UrlMovie = "UrlMovie.js";
+        // exec('/express/Node'.$UrlMovie);
+        
+
+        // if($movie_code === '81888') {
+        //     $UrlMovie.getUrl()
+        // }
+
+
+    }
 }
