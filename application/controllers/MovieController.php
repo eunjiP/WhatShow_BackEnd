@@ -225,11 +225,32 @@ class MovieController extends Controller {
         }
     }
 
+    //검색 백엔드
     public function movieDetail() {
         $json = getJson();
         $param = [
             'keyword' => str_replace(' ', '', $json['keyword'])
         ];
         return $this->model->selSearch($param);
+    }
+
+    //상세페이지 평점 백엔드
+    public function movieScore() {
+        $param = [
+            'movie_code' => $_GET['movie_code']
+        ];
+        $result = $this->model->selMovieScore($param);
+        if($result) {
+            return [_RESULT => $result];
+        } 
+        return [_RESULT => 0];
+    }
+
+    //상세페이지 추천수 백엔드
+    public function recommendCount() {
+        $param = [
+            'movie_code' => $_GET['movie_code']
+        ];   
+        return [_RESULT => $this->model->selRecommend($param)];
     }
 }

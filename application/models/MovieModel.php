@@ -83,4 +83,24 @@ class MovieModel extends Model {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    //평점의 평균을 계산하는 함수
+    public function selMovieScore(&$param) {
+        $sql = "SELECT AVG(movie_score) avgScore FROM t_review
+        WHERE movie_code = :movie_code
+        GROUP BY movie_code";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_code", $param['movie_code']);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function selRecommend(&$param) {
+        $sql = "SELECT count(movie_code) recommend FROM t_recommend
+        WHERE movie_code = :movie_code";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_code", $param['movie_code']);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 }
