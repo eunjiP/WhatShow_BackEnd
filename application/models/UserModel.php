@@ -3,8 +3,9 @@ namespace application\models;
 use PDO;
 
 class UserModel extends Model{
+    //유저정보 가져오기
     public function sel_user(&$param){
-        $sql = "SELECT uuid FROM t_user
+        $sql = "SELECT * FROM t_user
                 WHERE uuid = :uuid";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$param['uuid']]);
@@ -53,7 +54,7 @@ class UserModel extends Model{
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
-
+    //유저 rootcode 저장
     public function ins_rootcode(&$param){
         $sql = "UPDATE t_user SET root_code=:rootcode WHERE uuid=:uuid";
         $stmt = $this->pdo->prepare($sql);
@@ -62,4 +63,16 @@ class UserModel extends Model{
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+    //유저 프로필 사진 업데이트
+    public function upd_img(&$param){
+        $sql = "UPDATE t_user
+                SET user_img = :user_img
+                WHERE uuid = :uuid";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":user_img", $param["user_img"]);
+        $stmt->bindValue(":uuid", $param["uuid"]);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+    
 }
