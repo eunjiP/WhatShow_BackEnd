@@ -20,4 +20,5 @@
             $param = [ 'movie_code' => $url[2]];
             return $this->model->getReviewList($param); 
         }
+
     }
