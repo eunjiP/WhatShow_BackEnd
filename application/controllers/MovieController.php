@@ -20,7 +20,7 @@ class MovieController extends Controller {
     //영화진흥원의 박스오피스 TOP10
     public function boxOffice() {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        $targetDt = '20220808';
+        $targetDt = '20220807';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -50,33 +50,32 @@ class MovieController extends Controller {
             }
             print_r($movieCd);
             // return $this->model->insBoxoffice($param);
-            if($this->model->insBoxoffice($param)) {
-                for ($i=1; $i < count($param); $i++) { 
-                    $movie_code = $this->naverSearchApi($param[$i]);
-                    print($movieCd[($i-1)]);
-                    $movie_result = $this->movieDetailApi($movieCd[($i-1)]);
-                    print_r($movie_result);
-                    $movie_param = [
-                        'movie_code' => $movie_code,
-                        'movie_nm' => $param[$i],
-                        'movie_genre' => $movie_result['genres'],
-                        'open_date' => $re_res[$i-1]['openDt'],
-                        'country' => $movie_result['nations'],
-                        'movie_poster' => 'test',
-                        'director' => $movie_result['directors'],
-                        'actor' => $movie_result['actors'],
-                        'runing_time' => $movie_result['showTm'],
-                        'view_level' => $movie_result['watchGradeNm'],
-                    ];
-                    $result = $this->model->selMovies($movie_param);
-                    if($result) {
-                        print_r($result);
-                    } else {
-                        // print_r($movie_param);
-                        print $this->model->insMovies($movie_param);
-                    }
-                } 
-            } 
+            $this->model->insBoxoffice($param);
+            for ($i=1; $i < count($param); $i++) { 
+                $movie_code = $this->naverSearchApi($param[$i]);
+                print($movieCd[($i-1)]);
+                $movie_result = $this->movieDetailApi($movieCd[($i-1)]);
+                print_r($movie_result);
+                $movie_param = [
+                    'movie_code' => $movie_code,
+                    'movie_nm' => $param[$i],
+                    'movie_genre' => $movie_result['genres'],
+                    'open_date' => $re_res[$i-1]['openDt'],
+                    'country' => $movie_result['nations'],
+                    'movie_poster' => 'test',
+                    'director' => $movie_result['directors'],
+                    'actor' => $movie_result['actors'],
+                    'runing_time' => $movie_result['showTm'],
+                    'view_level' => $movie_result['watchGradeNm'],
+                ];
+                $result = $this->model->selMovies($movie_param);
+                if($result) {
+                    print_r($result);
+                } else {
+                    // print_r($movie_param);
+                    print $this->model->insMovies($movie_param);
+                }
+            }  
         } else {
             echo "Error 내용 : " . $res;
         }
@@ -195,7 +194,7 @@ class MovieController extends Controller {
             for ($i=0; $i < count($res['genres']); $i++) { 
                 $genres .= $res['genres'][$i]['genreNm'] ;
                 if($i !== count($res['genres'])-1) {
-                    $genres .= '/';
+                    $genres .= ',';
                 }
             }
             $res['nations'] = $res['nations'][0]['nationNm'];
