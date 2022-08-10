@@ -5,32 +5,7 @@ const fs = require('fs');
 const log = console.log;
 const code = '81888'
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : '506greendg@',
-    database : 'whatshow'
-});
-
-connection.connect();
-
-connection.query(
-    // 'SELECT movie_summary FROM t_movies', function(error, results, filds) {
-    //     if(error) {
-    //         console.log(error);
-    //     }
-    //     console.log('')
-    // }
-    `INSERT INTO t_movies(movie_summary) VALUES(${results}) WHERE movie_code = ${code}`, function(error, results, filds) {
-        if(error) {
-            console.log(error);
-        }
-        console.log('')
-    }
-);
-
-connection.end();
+let result = [];
 
 const getHtml = async() => {
     try {
@@ -38,8 +13,8 @@ const getHtml = async() => {
     } catch(error) {
         console.error(error);
     }
-};
-
+};  
+  
 // img와 summary
 getHtml()
 .then((html) => {
@@ -55,6 +30,17 @@ getHtml()
 })
 .then((res)=>log(res));
 
-console.log(getHtml);
+// console.log(getHtml);
 
+let UrlSumfile = 'UrlMovieTxt.txt';
+fs.open(UrlSumfile,'w', function(err, fd) {
+    console.log('file open complete');
+});
+
+for(let k=0; k<3; k++ ){
+    let resultValue = getHtml.dataAll;
+    fs.appendFileSync('UrlMovieTxt.txt', resultValue + '\n', 'utf-8', function(error) {
+        console.log(k+'err')
+    });
+}
 
