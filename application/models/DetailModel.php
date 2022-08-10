@@ -31,9 +31,11 @@
         // 각 영화에 대한 리뷰 리스트
         public function getReviewList(&$param) {
             $sql = 
-            "   SELECT * FROM t_review
-                WHERE movie_code = :movie_code
-                ORDER BY i_review DESC
+            "   SELECT A.*, B.nickname FROM t_review A
+                INNER JOIN t_user B
+                ON A.iuser = B.iuser
+                WHERE A.movie_code = :movie_code
+                ORDER BY A.i_review DESC
                 LIMIT :revlimit
             ";
 
