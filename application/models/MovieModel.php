@@ -75,11 +75,14 @@ class MovieModel extends Model {
     public function selSearch(&$param) {
         $search = $param['keyword'];
         $sql = "SELECT * FROM t_movies
-        WHERE movie_nm LIKE '%$search%' 
-        OR movie_genre LIKE '%$search%' 
-        OR director LIKE '%$search%' 
-        OR actor LIKE '%$search%'";
+                WHERE movie_nm LIKE '%$search%' 
+                OR movie_genre LIKE '%$search%' 
+                OR director LIKE '%$search%' 
+                OR actor LIKE '%$search%'
+                LIMIT :movielimit
+        ";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movielimit", $param['movielimit']);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
