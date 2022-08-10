@@ -12,13 +12,27 @@
             return $this->model->getMovieInfo($param);
         }
 
+        public function insertReview() {
+            $json = getJson();
+            $param = [
+                'ctnt' => $json['ctnt'],
+                'iuser' => $json['iuser'],
+                'movie_code' => $json['movie_code'],
+                'movie_score' => $json['movie_score'],
+            ];
+
+            return $this->model->insReview($param);
+        }
+
         public function reviewList() {
             $url = getUrlPaths();
             if(!isset($url[2])) {
                 exit();
             }
-            $param = [ 'movie_code' => $url[2]];
+            $param = [ 'movie_code' => $url[2], 'revlimit' => $url[3]];
             return $this->model->getReviewList($param); 
         }
+
+
 
     }
