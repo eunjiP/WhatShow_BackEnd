@@ -3,32 +3,37 @@
     use PDO;
 
 class MovieModel extends Model {
-    // 영화 전체 리스트 가지고 오는 함수
-    public function selList() {
-        $sql = "SELECT * FROM t_movies";
+    // 영화 TOP10 리스트 가지고 오는 함수
+    public function selList(&$param) {
+        $sql = "SELECT * FROM t_movies A
+        INNER JOIN t_boxoffice B
+        ON A.movie_nm = B.movie_nm
+        WHERE boxoffice_date = :date
+        ORDER BY rank";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":date", $param['targetDt']);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function selBoxoffice(&$param) {
+        $sql = "SELECT * FROM t_boxoffice
+            WHERE boxoffice_date = :date";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":date", $param['targetDt']);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     //일일박스오피스 DB저장 함수
     public function insBoxoffice(&$param) {
         $sql = "INSERT INTO t_boxoffice
-            SET boxoffice_date = :date, 1th_nm = :1,
-            2th_nm = :2, 3th_nm = :3, 4th_nm = :4, 5th_nm = :5,
-            6th_nm = :6, 7th_nm = :7, 8th_nm = :8, 9th_nm = :9, 10th_nm = :10";
+            SET boxoffice_date = :date, rank = :rank,
+            movie_nm = :movie_nm";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":date", $param['date']);
-        $stmt->bindValue(":1", $param['1']);
-        $stmt->bindValue(":2", $param['2']);
-        $stmt->bindValue(":3", $param['3']);
-        $stmt->bindValue(":4", $param['4']);
-        $stmt->bindValue(":5", $param['5']);
-        $stmt->bindValue(":6", $param['6']);
-        $stmt->bindValue(":7", $param['7']);
-        $stmt->bindValue(":8", $param['8']);
-        $stmt->bindValue(":9", $param['9']);
-        $stmt->bindValue(":10", $param['10']);
+        $stmt->bindValue(":rank", $param['rank']);
+        $stmt->bindValue(":movie_nm", $param['movie_nm']);
         $stmt->execute();
         return $stmt->rowCount();
     }
@@ -75,11 +80,14 @@ class MovieModel extends Model {
     public function selSearch(&$param) {
         $search = $param['keyword'];
         $sql = "SELECT * FROM t_movies
-        WHERE movie_nm LIKE '%$search%' 
-        OR movie_genre LIKE '%$search%' 
-        OR director LIKE '%$search%' 
-        OR actor LIKE '%$search%'";
+                WHERE movie_nm LIKE '%$search%' 
+                OR movie_genre LIKE '%$search%' 
+                OR director LIKE '%$search%' 
+                OR actor LIKE '%$search%'
+                LIMIT :movielimit
+        ";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movielimit", $param['movielimit']);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
