@@ -241,10 +241,6 @@ class MovieController extends Controller {
             'iuser' => $_GET['iuser']
         ];
         $result = $this->model->selMovieScoreAndRecommend($param);
-        if($result) {
-            return [_RESULT => $result];
-        } 
-        return [_RESULT => 0];
+        return $result;
     }
-
 }

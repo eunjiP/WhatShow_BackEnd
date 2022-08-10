@@ -86,14 +86,16 @@ class MovieModel extends Model {
 
     //평점의 평균, 추천 수, 내가 추천했는 여부 확인 하는 함수
     public function selMovieScoreAndRecommend(&$param) {
-        $sql = "SELECT AVG(A.movie_score) AS avgScore, (SELECT count(movie_code) FROM t_recommend WHERE movie_code = :movie_code) AS recommend, (SELECT count(movie_code) FROM t_recommend WHERE movie_code = :movie_code AND iuser = :iuser) meRecommend 
-        FROM t_review A
-        WHERE movie_code = :movie_code
-        GROUP BY movie_code";
+        $movie_code = $param['movie_code'];
+        $sql = "SELECT COUNT(A.movie_code) AS recommend, 
+        (SELECT count(movie_code) FROM t_recommend WHERE movie_code = $movie_code AND iuser = :iuser) meRecommend,
+        ifnull((SELECT AVG(movie_score) FROM t_review WHERE movie_code = $movie_code
+        GROUP BY movie_code), 0) AS avgScore
+        FROM t_recommend A
+        WHERE movie_code = $movie_code";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":movie_code", $param['movie_code']);
         $stmt->bindValue(":iuser", $param['iuser']);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 }
