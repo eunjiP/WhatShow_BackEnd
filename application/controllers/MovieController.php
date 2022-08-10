@@ -233,10 +233,13 @@ class MovieController extends Controller {
     public function selSearch() {
         $url = getUrlPaths();
         $param = [
-            'keyword' => $url[2]
+            'keyword' => $url[2], 'movielimit' => $url[3]
         ];
         return $this->model->selSearch($param);
     }
+
+    //영화 더보기 기능
+
 
     //상세페이지 평점 및 추천 관련 백엔드
     public function movieScoreAndRecommend() {
