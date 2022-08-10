@@ -226,10 +226,10 @@ class MovieController extends Controller {
     }
 
     //검색 백엔드
-    public function movieDetail() {
-        $json = getJson();
+    public function selSearch() {
+        $url = getUrlPaths();
         $param = [
-            'keyword' => str_replace(' ', '', $json['keyword'])
+            'keyword' => $url[2]
         ];
         return $this->model->selSearch($param);
     }
@@ -243,4 +243,6 @@ class MovieController extends Controller {
         $result = $this->model->selMovieScoreAndRecommend($param);
         return $result;
     }
+
+
 }
