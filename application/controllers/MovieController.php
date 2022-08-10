@@ -224,4 +224,25 @@ class MovieController extends Controller {
             echo "Error 내용 : " . $res;
         }
     }
+
+    //검색 백엔드
+    public function selSearch() {
+        $url = getUrlPaths();
+        $param = [
+            'keyword' => $url[2]
+        ];
+        return $this->model->selSearch($param);
+    }
+
+    //상세페이지 평점 및 추천 관련 백엔드
+    public function movieScoreAndRecommend() {
+        $param = [
+            'movie_code' => $_GET['movie_code'],
+            'iuser' => $_GET['iuser']
+        ];
+        $result = $this->model->selMovieScoreAndRecommend($param);
+        return $result;
+    }
+
+
 }
