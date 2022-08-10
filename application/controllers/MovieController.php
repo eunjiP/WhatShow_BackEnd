@@ -11,16 +11,24 @@ class MovieController extends Controller {
     public function main() {
         switch(getMethod()) {
             case _GET:
-                return $this->model->selList();
+                $date = date('Ymd', $_SERVER['REQUEST_TIME']-86400);
+                $param = [
+                    'targetDt' => $date
+                ];
+                if(!$this->model->selBoxoffice($param)) {
+                    $this->boxOffice($param);
+                }
+                return $this->model->selList($param);
             case _POST:
 
         }
     }
 
     //영화진흥원의 박스오피스 TOP10
-    public function boxOffice() {
+    public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        $targetDt = '20220807';
+        $targetDt = $param['targetDt'];
+        // $targetDt = '20220808';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -38,22 +46,18 @@ class MovieController extends Controller {
         if($stat === 200) {
             $re_res = json_decode($res, true);
             $re_res = $re_res['boxOfficeResult']['dailyBoxOfficeList'];
-            // print_r($re_res);
             $param = [
                 'date' => $targetDt
             ];
-
             $movieCd = [];
-            for ($i=0; $i < count($re_res); $i++) { 
-                $param[$re_res[$i]['rank']] = $re_res[$i]['movieNm'];
+            for ($i=0; $i < 10; $i++) { 
+                $param['rank'] = $re_res[$i]['rank'];
+                $param['movie_nm'] = $re_res[$i]['movieNm'];
                 array_push($movieCd, $re_res[$i]['movieCd']);
+                $this->model->insBoxoffice($param);
             }
-            print_r($movieCd);
-            // return $this->model->insBoxoffice($param);
-            $result = $this->model->insBoxoffice($param);
             for ($i=1; $i < count($param); $i++) { 
                 $movie_code = $this->naverSearchApi($param[$i]);
-                print($movieCd[($i-1)]);
                 $movie_result = $this->movieDetailApi($movieCd[($i-1)]);
                 print_r($movie_result);
                 $movie_param = [
