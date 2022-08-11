@@ -25,10 +25,10 @@ class MovieController extends Controller {
     }
 
     //영화진흥원의 박스오피스 TOP10
-    public function boxOffice() {
+    public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        $targetDt = $param['targetDt'];
-        // $targetDt = '20220808';
+        // $targetDt = $param['targetDt'];
+        $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
