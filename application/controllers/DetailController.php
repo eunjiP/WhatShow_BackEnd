@@ -21,18 +21,17 @@
                 'movie_score' => $json['movie_score'],
             ];
 
-            return $this->model->insReview($param);
+            return [_RESULT => $this->model->insReview($param)];
         }
 
         public function reviewList() {
-            $url = getUrlPaths();
-            if(!isset($url[2])) {
-                exit();
-            }
-            $param = [ 'movie_code' => $url[2], 'revlimit' => $url[3]];
-            return $this->model->getReviewList($param); 
+           $getUrl = getUrlPaths();
+            
+           $param = [
+                'movie_code' => $getUrl[2],
+                'revlimit' => $getUrl[3]
+           ];
+           return $this->model->getReviewList($param); 
         }
-
-
 
     }
