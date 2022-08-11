@@ -8,6 +8,14 @@ class MovieController extends Controller {
         return "template/t1.php";
     }
 
+    public function get_movie(){
+        switch(getMethod()) {
+            case _GET:
+                return $this->model->get_movie();
+            case _POST:
+        }
+    }
+    
     public function main() {
         switch(getMethod()) {
             case _GET:
