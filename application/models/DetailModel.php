@@ -35,7 +35,7 @@
                 INNER JOIN t_user B
                 ON A.iuser = B.iuser
                 WHERE A.movie_code = :movie_code
-                ORDER BY A.i_review DESC
+                ORDER BY A.created_at DESC
                 LIMIT :revlimit
             ";
 
