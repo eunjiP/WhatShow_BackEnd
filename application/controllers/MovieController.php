@@ -61,7 +61,7 @@ class MovieController extends Controller {
                 //은지
                 //exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영은
-                exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
