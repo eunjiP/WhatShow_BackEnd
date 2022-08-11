@@ -57,8 +57,8 @@ class MovieController extends Controller {
                 $myfile = fopen("movie_code.txt", "w");
                 fwrite($myfile, $movie_code);
                 fclose($myfile);
-                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 $f_story = file("movie_story.txt");
                 $story = '';
                 foreach($f_story as $line) {
@@ -262,18 +262,5 @@ class MovieController extends Controller {
         return $result;
     }
 
-    // 영화 코드로 영화 정보 가져오기
-    public function movieCodeSel() {
-        $param = [
-            'movie_code' => $_GET['movie_code'],
-            'movie_nm' => $_GET['movie_nm'],
-            'movie_genre' => $_GET['movie_genre'],
-            'country' => $_GET['country'],
-            'director' => $_GET['director'],
-            'actor' => $_GET['actor'],
-            'movie_summary' => $_GET['movie_summary']
-        ];       
-        return  $result = $this->model->selMovieCodeInfo($param);
-    }
 
 }

@@ -125,14 +125,14 @@ class MovieModel extends Model {
     }
 
     // 영화코드로 영화 정보 가져오기
-    public function selMovieCodeInfo(&$param) {
-        // $movie_code = $param["movie_code"];
+    public function selMovieCodeInfo(&$param) {        
         $sql = "SELECT movie_nm, movie_genre, country, director, actor, movie_summary
                 FROM t_movies
-                WHERE movie_code = :movie_code
+                WHERE movie_code = $movie_code
         ";
+        $movie_code = $param["movie_code"];
         $stmt = $this->pdo->prepare($sql);
-        $stmt -> bindValue(":movie_code", $param["movie_code"]);
+        $stmt -> bindValue(":movie_code", $movie_code);
         $stmt -> execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
