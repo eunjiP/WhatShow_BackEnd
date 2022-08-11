@@ -16,6 +16,7 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    //박스오피스에 자료가 있는지 유무를 확인하는 함수
     public function selBoxoffice(&$param) {
         $sql = "SELECT * FROM t_boxoffice
             WHERE boxoffice_date = :date";
@@ -60,7 +61,7 @@ class MovieModel extends Model {
     //영화 정보 입력 함수
     public function insMovies(&$param) {
         $sql = "INSERT INTO t_movies
-        SET movie_code = :movie_code, movie_nm = :movie_nm, movie_genre = :movie_genre, open_date = :open_date, country = :country, director = :director, actor = :actor, movie_poster = :movie_poster, runing_time = :runing_time, view_level = :view_level";
+        SET movie_code = :movie_code, movie_nm = :movie_nm, movie_genre = :movie_genre, open_date = :open_date, country = :country, director = :director, actor = :actor, movie_poster = :movie_poster, runing_time = :runing_time, view_level = :view_level, movie_summary = :movie_summary";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":movie_code", $param['movie_code']);
         $stmt->bindValue(":movie_nm", $param['movie_nm']);
@@ -72,6 +73,21 @@ class MovieModel extends Model {
         $stmt->bindValue(":movie_poster", $param['movie_poster']);
         $stmt->bindValue(":runing_time", $param['runing_time']);
         $stmt->bindValue(":view_level", $param['view_level']);
+        $stmt->bindValue(":movie_summary", $param['movie_summary']);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    //포스터, 줄거리 업데이브 함수
+    public function updateMovies(&$param) {
+        $sql = "INSERT INTO t_movies SET movie_code = :movie_code, movie_nm = :movie_nm
+        ON DUPLICATE KEY UPDATE movie_poster = :movie_poster,
+        movie_summary = :movie_summary";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_code", $param['movie_code']);
+        $stmt->bindValue(":movie_nm", $param['movie_nm']);
+        $stmt->bindValue(":movie_poster", $param['movie_poster']);
+        $stmt->bindValue(":movie_summary", $param['movie_summary']);
         $stmt->execute();
         return $stmt->rowCount();
     }

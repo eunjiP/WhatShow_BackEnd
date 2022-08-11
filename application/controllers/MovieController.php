@@ -27,8 +27,8 @@ class MovieController extends Controller {
     //영화진흥원의 박스오피스 TOP10
     public function boxOffice() {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        // $targetDt = $param['targetDt'];
-        $targetDt = '20220809';
+        $targetDt = $param['targetDt'];
+        // $targetDt = '20220808';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -49,37 +49,47 @@ class MovieController extends Controller {
             $param = [
                 'date' => $targetDt
             ];
-            $movieCd = [];
             for ($i=0; $i < 10; $i++) { 
                 $param['rank'] = $re_res[$i]['rank'];
                 $param['movie_nm'] = $re_res[$i]['movieNm'];
-                array_push($movieCd, $re_res[$i]['movieCd']);
-                $this->model->insBoxoffice($param);
-            }
-            for ($i=1; $i < count($param); $i++) { 
-                $movie_code = $this->naverSearchApi($param[$i]);
-                $movie_result = $this->movieDetailApi($movieCd[($i-1)]);
-                print_r($movie_result);
+                $movie_code = $this->naverSearchApi($param['movie_nm']);
+                $movie_result = $this->movieDetailApi($re_res[$i]['movieCd']);
+                $myfile = fopen("movie_code.txt", "w");
+                fwrite($myfile, $movie_code);
+                fclose($myfile);
+                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                $f_story = file("movie_story.txt");
+                $story = '';
+                foreach($f_story as $line) {
+                    $story .= $line . '\\';
+                }
+                // fclose($f_story);
+                $movie_img = '';
+                $f_img = fopen("movie_img.txt", "r");
+                $movie_img .= fgets($f_img);
+                fclose($f_img);
                 $movie_param = [
                     'movie_code' => $movie_code,
-                    'movie_nm' => $param[$i],
+                    'movie_nm' => $param['movie_nm'],
                     'movie_genre' => $movie_result['genres'],
-                    'open_date' => $re_res[$i-1]['openDt'],
+                    'open_date' => $re_res[$i]['openDt'],
                     'country' => $movie_result['nations'],
-                    'movie_poster' => 'test',
+                    'movie_poster' => $movie_img,
                     'director' => $movie_result['directors'],
                     'actor' => $movie_result['actors'],
                     'runing_time' => $movie_result['showTm'],
                     'view_level' => $movie_result['watchGradeNm'],
+                    'movie_summary' => $story
                 ];
-                $result = $this->model->selMovies($movie_param);
-                if($result) {
-                    print_r($result);
+                // $this->model->insBoxoffice($param);
+                print_r($param);
+                print_r($movie_param);
+                if(!$this->model->selMovies($movie_param)) {
+                    print_r($this->model->insMovies($movie_param));
                 } else {
-                    // print_r($movie_param);
-                    print $this->model->insMovies($movie_param);
+                    print_r($this->model->updateMovies($movie_param));
                 }
-            }  
+            }
         } else {
             echo "Error 내용 : " . $res;
         }
