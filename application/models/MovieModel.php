@@ -107,4 +107,11 @@ class MovieModel extends Model {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    // 마이페이지 태그 추천
+    public function selfTag(&$param) {
+        $sql = "SELECT movie_genre FROM t_movies
+                GROUP BY movie_genre
+                ";
+    }
 }
