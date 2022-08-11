@@ -8,6 +8,14 @@ class MovieController extends Controller {
         return "template/t1.php";
     }
 
+    public function get_movie(){
+        switch(getMethod()) {
+            case _GET:
+                return $this->model->get_movie();
+            case _POST:
+        }
+    }
+
     public function main() {
         switch(getMethod()) {
             case _GET:
@@ -20,15 +28,14 @@ class MovieController extends Controller {
                 }
                 return $this->model->selList($param);
             case _POST:
-
         }
     }
 
     //영화진흥원의 박스오피스 TOP10
     public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        // $targetDt = $param['targetDt'];
-        $targetDt = '20220810';
+        $targetDt = $param['targetDt'];
+        // $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -57,7 +64,7 @@ class MovieController extends Controller {
                 $myfile = fopen("movie_code.txt", "w");
                 fwrite($myfile, $movie_code);
                 fclose($myfile);
-                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                exec('C:\Python\Python38\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
                 $f_story = file("movie_story.txt");
                 $story = '';
                 foreach($f_story as $line) {
@@ -81,7 +88,7 @@ class MovieController extends Controller {
                     'view_level' => $movie_result['watchGradeNm'],
                     'movie_summary' => $story
                 ];
-                // $this->model->insBoxoffice($param);
+                $this->model->insBoxoffice($param);
                 print_r($param);
                 print_r($movie_param);
                 if(!$this->model->selMovies($movie_param)) {

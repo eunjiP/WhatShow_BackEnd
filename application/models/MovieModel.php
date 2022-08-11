@@ -16,6 +16,14 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    // 영화 리스트 가져옴
+    public function get_movie(){
+        $sql = "SELECT * FROM t_movies";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
     //박스오피스에 자료가 있는지 유무를 확인하는 함수
     public function selBoxoffice(&$param) {
         $sql = "SELECT * FROM t_boxoffice
