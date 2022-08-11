@@ -59,4 +59,23 @@
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         }
+
+        //추천 추가 및 삭제 함수
+        public function changeRecommend(&$param) {
+            if($param['fn'] === 'add') {
+                $sql = "INSERT INTO t_recommend
+                (movie_code, iuser)
+                VALUES
+                (:movie_code, :iuser)";
+            } else if($param['fn'] === 'remove') {
+                $sql = "DELETE FROM t_recommend
+                WHERE movie_code = :movie_code
+                AND iuser = :iuser";
+            }
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(":movie_code", $param['movie_code']);
+            $stmt->bindValue(":iuser", $param['iuser']);
+            $stmt->execute();
+            return $stmt->rowCount();
+        }
     }

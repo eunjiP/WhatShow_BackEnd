@@ -42,6 +42,22 @@
         ];
         $result = $this->model->selMovieScoreAndRecommend($param);
         return $result;
-    }
+        }
 
+        //추천 추가 및 삭제 부분
+        public function changeRecommend() {
+            $getUrl = getUrlPaths();
+            $param = [
+                'movie_code' => intval($getUrl[2]),
+                'iuser' => intval($getUrl[3])
+            ];
+            switch(getMethod()) {
+                case _POST:
+                    $param['fn'] = 'add';
+                    return [_RESULT => $this->model->changeRecommend($param)];
+                case _DELETE:
+                    $param['fn'] = 'remove';
+                    return [_RESULT => $this->model->changeRecommend($param)];
+            }
+        }
     }
