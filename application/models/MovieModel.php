@@ -124,10 +124,17 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    // 마이페이지 태그 추천
-    public function selfTag(&$param) {
-        $sql = "SELECT movie_genre FROM t_movies
-                GROUP BY movie_genre
-                ";
+    // 영화코드로 영화 정보 가져오기
+    public function selMovieCodeInfo(&$param) {
+        // $movie_code = $param["movie_code"];
+        $sql = "SELECT movie_nm, movie_genre, country, director, actor, movie_summary
+                FROM t_movies
+                WHERE movie_code = :movie_code
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt -> bindValue(":movie_code", $param["movie_code"]);
+        $stmt -> execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
 }

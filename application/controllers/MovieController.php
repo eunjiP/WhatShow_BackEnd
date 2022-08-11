@@ -262,5 +262,18 @@ class MovieController extends Controller {
         return $result;
     }
 
+    // 영화 코드로 영화 정보 가져오기
+    public function movieCodeSel() {
+        $param = [
+            'movie_code' => $_GET['movie_code'],
+            'movie_nm' => $_GET['movie_nm'],
+            'movie_genre' => $_GET['movie_genre'],
+            'country' => $_GET['country'],
+            'director' => $_GET['director'],
+            'actor' => $_GET['actor'],
+            'movie_summary' => $_GET['movie_summary']
+        ];       
+        return  $result = $this->model->selMovieCodeInfo($param);
+    }
 
 }
