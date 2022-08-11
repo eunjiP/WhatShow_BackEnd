@@ -70,9 +70,11 @@ class MovieController extends Controller {
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영은
                 // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                //영롱
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
                 //경식
                 exec('C:\Python\Python38\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
-            
+
                 $f_story = file("movie_story.txt");
                 $story = '';
                 foreach($f_story as $line) {
