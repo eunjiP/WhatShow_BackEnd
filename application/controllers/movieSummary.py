@@ -11,7 +11,6 @@ f = open('C:\Apache24\WhatShowBackEnd\movie_code.txt', 'r')
 # f = open('C:\Apache24\WhatShowBackEnd\movie_code.txt', 'r')
 # f = open('C:\Apache24\WhatShowBackEnd\movie_code.txt', 'r')
 # f = open('C:\Apache24\WhatShowBackEnd\movie_code.txt', 'r')
->>>>>>> b951736b0718ec651a87590a60522592bf526e20
 code = f.readline()
 f.close()
 print(code)
