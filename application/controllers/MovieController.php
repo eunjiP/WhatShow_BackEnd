@@ -27,8 +27,8 @@ class MovieController extends Controller {
     //영화진흥원의 박스오피스 TOP10
     public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        // $targetDt = $param['targetDt'];
-        $targetDt = '20220810';
+        $targetDt = $param['targetDt'];
+        // $targetDt = '20220809';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -57,12 +57,16 @@ class MovieController extends Controller {
                 $myfile = fopen("movie_code.txt", "w");
                 fwrite($myfile, $movie_code);
                 fclose($myfile);
+
                 //은지
                 exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                //영은
+                // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                
                 $f_story = file("movie_story.txt");
                 $story = '';
                 foreach($f_story as $line) {
@@ -86,7 +90,7 @@ class MovieController extends Controller {
                     'view_level' => $movie_result['watchGradeNm'],
                     'movie_summary' => $story
                 ];
-                // $this->model->insBoxoffice($param);
+                $this->model->insBoxoffice($param);
                 print_r($param);
                 print_r($movie_param);
                 if(!$this->model->selMovies($movie_param)) {
@@ -255,16 +259,6 @@ class MovieController extends Controller {
 
     //영화 더보기 기능
 
-
-    //상세페이지 평점 및 추천 관련 백엔드
-    public function movieScoreAndRecommend() {
-        $param = [
-            'movie_code' => $_GET['movie_code'],
-            'iuser' => $_GET['iuser']
-        ];
-        $result = $this->model->selMovieScoreAndRecommend($param);
-        return $result;
-    }
 
 
 }
