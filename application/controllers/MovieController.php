@@ -28,7 +28,7 @@ class MovieController extends Controller {
     public function boxOffice() {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
         // $targetDt = $param['targetDt'];
-        $targetDt = '20220809';
+        $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
