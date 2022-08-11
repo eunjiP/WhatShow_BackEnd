@@ -2,7 +2,7 @@
     namespace application\Controllers;
 
     class DetailController extends Controller {
-        public function movieInfo() {
+        public function movieInfo() { // 영화 정보
             $url = getUrlPaths();
             if(!isset($url[2])) {
                 exit();
@@ -12,7 +12,7 @@
             return $this->model->getMovieInfo($param);
         }
 
-        public function insertReview() {
+        public function insertReview() { // 리뷰작성
             $json = getJson();
             $param = [
                 'ctnt' => $json['ctnt'],
@@ -24,7 +24,7 @@
             return [_RESULT => $this->model->insReview($param)];
         }
 
-        public function reviewList() {
+        public function reviewList() { //리뷰 리스트
            $getUrl = getUrlPaths();
             
            $param = [
@@ -33,5 +33,15 @@
            ];
            return $this->model->getReviewList($param); 
         }
+
+        //상세페이지 평점 및 추천 관련 백엔드
+        public function movieScoreAndRecommend() {
+        $param = [
+            'movie_code' => $_GET['movie_code'],
+            'iuser' => $_GET['iuser']
+        ];
+        $result = $this->model->selMovieScoreAndRecommend($param);
+        return $result;
+    }
 
     }
