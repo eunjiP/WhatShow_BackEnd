@@ -57,8 +57,16 @@ class MovieController extends Controller {
                 $myfile = fopen("movie_code.txt", "w");
                 fwrite($myfile, $movie_code);
                 fclose($myfile);
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+
+                //은지
                 exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                //영은
+                // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                //영롱
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                
                 $f_story = file("movie_story.txt");
                 $story = '';
                 foreach($f_story as $line) {
@@ -251,16 +259,6 @@ class MovieController extends Controller {
 
     //영화 더보기 기능
 
-
-    //상세페이지 평점 및 추천 관련 백엔드
-    public function movieScoreAndRecommend() {
-        $param = [
-            'movie_code' => $_GET['movie_code'],
-            'iuser' => $_GET['iuser']
-        ];
-        $result = $this->model->selMovieScoreAndRecommend($param);
-        return $result;
-    }
 
 
 }
