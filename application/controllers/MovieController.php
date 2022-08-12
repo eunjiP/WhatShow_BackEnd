@@ -25,10 +25,10 @@ class MovieController extends Controller {
     }
 
     //영화진흥원의 박스오피스 TOP10
-    public function boxOffice(&$param) {
+    public function boxOffice() {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
-        $targetDt = $param['targetDt'];
-        // $targetDt = '20220809';
+        // $targetDt = $param['targetDt'];
+        $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -63,7 +63,7 @@ class MovieController extends Controller {
                 //영은
                 // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 // 영롱
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 
