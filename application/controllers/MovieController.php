@@ -263,11 +263,19 @@ class MovieController extends Controller {
         $param = [
             'keyword' => $url[2], 'movielimit' => $url[3]
         ];
-        if($this->model->insSearch($param)) {
-            return $this->model->selSearch($param);
-        }
-        return 0;
+        
+        return $this->model->selSearch($param);
     }
+
+    public function insSearch() {
+        $json = getJson();
+        $param = [
+            'keywore' => $json['json'],
+            'iuser' => $json['json']
+        ];
+        return $this->model->insSearch($param);
+    }
+
 
     //영화 더보기 기능
 
