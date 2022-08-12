@@ -266,6 +266,7 @@ class MovieController extends Controller {
         return $this->model->selSearch($param);
     }
 
+    //검색어 저장 백엔드
     public function insSearch() {
         $json = getUrlPaths();
         $param = [
@@ -277,8 +278,29 @@ class MovieController extends Controller {
 
     //영화 더보기 기능
 
-    
-
-
+    //인기검색어 백엔드
+    public function selTopSearch() {
+        if(getMethod() === _GET) {
+            $search_total = $this->model->selTopSearch();
+            $search_total = json_decode(json_encode($search_total), true);
+            $keyword = [];
+            $result = [];
+            //검색어 중에 가장 많이 검색한 리스트를 전체 가지고 온다
+            for ($i=0; $i < count($search_total); $i++) { 
+                array_push($keyword, $search_total[$i]['search']);
+            }
+            //그중에 검색 결과가 없는 키워드는 제외하고 result배열에 담는다
+            for ($i=0; $i < count($keyword); $i++) {
+                $param = [
+                    'tag' => $keyword[$i]
+                ];
+                $search_result =json_decode(json_encode($this->model->selTagList($param)), true);
+                if($search_result) {
+                    array_push($result, $keyword[$i]);
+                }
+            }
+            return $result;
+        }
+    }
 
 }
