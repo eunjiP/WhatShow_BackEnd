@@ -67,13 +67,14 @@ class MovieController extends Controller {
                 fclose($myfile);
 
                 //은지
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영은
                 // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
-                // 영롱
-                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                //영롱
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+                //경식
+                // exec('C:\Python\Python38\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+            
                 
                 $f_story = file("movie_story.txt");
                 $story = '';
@@ -262,10 +263,11 @@ class MovieController extends Controller {
         $param = [
             'keyword' => $url[2], 'movielimit' => $url[3]
         ];
-        
+
         return $this->model->selSearch($param);
     }
 
+    //검색어 저장 백엔드
     public function insSearch() {
         $json = getUrlPaths();
         $param = [
@@ -277,8 +279,29 @@ class MovieController extends Controller {
 
     //영화 더보기 기능
 
-    
-
-
+    //인기검색어 백엔드
+    public function selTopSearch() {
+        if(getMethod() === _GET) {
+            $search_total = $this->model->selTopSearch();
+            $search_total = json_decode(json_encode($search_total), true);
+            $keyword = [];
+            $result = [];
+            //검색어 중에 가장 많이 검색한 리스트를 전체 가지고 온다
+            for ($i=0; $i < count($search_total); $i++) { 
+                array_push($keyword, $search_total[$i]['search']);
+            }
+            //그중에 검색 결과가 없는 키워드는 제외하고 result배열에 담는다
+            for ($i=0; $i < count($keyword); $i++) {
+                $param = [
+                    'tag' => $keyword[$i]
+                ];
+                $search_result =json_decode(json_encode($this->model->selTagList($param)), true);
+                if($search_result) {
+                    array_push($result, $keyword[$i]);
+                }
+            }
+            return $result;
+        }
+    }
 
 }

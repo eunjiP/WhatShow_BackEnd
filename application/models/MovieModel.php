@@ -117,31 +117,6 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    //영화키워드 디비저장하는 백엔드
-    public function insSearch($param) {
-        $sql =" INSERT INTO t_search
-                (search, iuser)
-                VALUE
-                (:search, :iuser)
-        ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":search", $param["keyword"]);
-        $stmt->bindValue(":iuser", $param["iuser"]);
-        $stmt->execute();
-        return $stmt->rowCount();
-    }
 
-    // 영화 키워드 최근순으로 
-    public function selSearchKey($param) {
-        $sql = "SELECT search, COUNT(search) AS num FROM t_search
-                GROUP BY search
-                ORDER BY num DESC, search_at ASC
-        ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":search", $param["search"]);
-        $stmt->bindValue(":num", $param["num"]);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
-    }
 
 }
