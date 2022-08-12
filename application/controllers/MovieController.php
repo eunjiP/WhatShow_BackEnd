@@ -270,7 +270,7 @@ class MovieController extends Controller {
     public function insSearch() {
         $json = getJson();
         $param = [
-            'keywore' => $json['json'],
+            'keyword' => $json['json'],
             'iuser' => $json['json']
         ];
         return $this->model->insSearch($param);
