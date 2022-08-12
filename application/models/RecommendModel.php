@@ -34,4 +34,15 @@ class RecommendModel extends Model {
         $stmt -> execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    //장르(체크박스) 체크 후 검색하기
+    public function selGenreList(&$param) {
+        $genre = $param['tag'];
+        $sql = "SELECT movie_code, count(*) as tagScore FROM t_movies
+                WHERE movie_genre LIKE '%$genre%'
+                GROUP BY movie_code";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

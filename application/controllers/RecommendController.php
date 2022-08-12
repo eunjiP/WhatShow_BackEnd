@@ -7,8 +7,10 @@
         public function tagRecommend() {
             //마이페이지 태그 리스트 담는 배열($params)
             $params = [
+                //장르가 1이면 장르별 검색, 0이면 사용자 태그 맞춤추천
+                'genre' => 1,
                 0 => '액션',
-                1 => '박해일'
+                1 => '애니메이션'
             ];
             //전체 영화 코드
             $movie_total = $this->model->selTotalList();
@@ -26,13 +28,17 @@
                 array_push($movies_code, $val);
             }
             $movies_code = json_decode(json_encode($movies_code), true);
-
+            
             //제목, 나라, 배우, 감독, 줄거리 등에 태그 키워드가 포함되어 있는 수를 점수로 영화 코드 별로 더 해준다
-            for ($i=0; $i < count($params); $i++) { 
+            for ($i=0; $i < count($params)-1; $i++) { 
                 $param = [
                     'tag' => $params[$i]
                 ];
-                $result = $this->model->selTagList($param);
+                if($params['genre']) {
+                    $result = $this->model->selGenreList($param);
+                } else {
+                    $result = $this->model->selTagList($param);
+                }
                 $result = json_decode(json_encode($result), true);
                 // print_r($result);
                 for ($j=0; $j < count($movies_code); $j++) { 
@@ -43,7 +49,7 @@
                     }
                 }
             }
-
+            
             //영화의 점수를 기준으로 이중 배열을 정렬한 후에 리턴
             foreach ((array)$movies_code as $key => $value) {
                 $sort[$key] = $value['score'];
