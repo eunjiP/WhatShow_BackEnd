@@ -8,7 +8,7 @@ url = 'https://movie.naver.com/movie/bi/mi/basic.naver?code='
 # 영롱
 f = open('C:\Apache24\WhatShow_BackEnd\movie_code.txt', 'r')
 # 경식
-# f = open('C:\Apache24\WhatShow_BackEnd\movie_code.txt', 'r')
+f = open('C:\Apache24\WhatShow_BackEnd\movie_code.txt', 'r')
 
 code = f.readline()
 f.close()
