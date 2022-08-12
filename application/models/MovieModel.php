@@ -117,16 +117,42 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    // 영화코드로 영화 정보 가져오기
-    public function selMovieCodeInfo(&$param) {     
-        $sql = "SELECT * FROM t_movies
-                WHERE movie_code = :movie_code
-        ";
+    //영화키워드 디비저장하는 백엔드
+    public function insSearch($param) {
+        $sql ="INSERT INTO t_search
+               (search, iuser)
+               VALUE
+               (:search, :iuser)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt -> bindValue(":movie_code", $param["movie_code"]);
-        $stmt -> execute();
+        $stmt->bindValue(":search", $param["keyword"]);
+        $stmt->bindValue(":iuser", $param["iuser"]);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function selTopSearch() {
+        $sql = "SELECT search, COUNT(*) AS sCount FROM t_search
+            GROUP BY search
+            ORDER BY sCount DESC, search_at DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    //추천부분과 겹치는 함수 나중에 합치기!!
+    public function selTagList(&$param) {
+        $tag = $param['tag'];
+        $sql = "SELECT movie_code, count(*) as tagScore FROM t_movies A
+        WHERE movie_nm LIKE '%$tag%' OR
+        movie_genre LIKE '%$tag%' OR
+        country LIKE '%$tag%' OR
+        director LIKE '%$tag%' OR
+        actor LIKE '%$tag%' OR
+        movie_summary LIKE '%$tag%'
+        GROUP BY movie_code";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 
 }

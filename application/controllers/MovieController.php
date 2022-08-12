@@ -8,6 +8,14 @@ class MovieController extends Controller {
         return "template/t1.php";
     }
 
+    public function get_movie(){
+        switch(getMethod()) {
+            case _GET:
+                return $this->model->get_movie();
+            case _POST:
+        }
+    }
+    
     public function main() {
         switch(getMethod()) {
             case _GET:
@@ -28,7 +36,7 @@ class MovieController extends Controller {
     public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
         $targetDt = $param['targetDt'];
-        // $targetDt = '20220809';
+        // $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -59,9 +67,9 @@ class MovieController extends Controller {
                 fclose($myfile);
 
                 //은지
-                //exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영은
-                exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영롱
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
                 //경식
@@ -255,11 +263,45 @@ class MovieController extends Controller {
         $param = [
             'keyword' => $url[2], 'movielimit' => $url[3]
         ];
+
         return $this->model->selSearch($param);
+    }
+
+    //검색어 저장 백엔드
+    public function insSearch() {
+        $json = getUrlPaths();
+        $param = [
+            'keyword' => $json[2],
+            'iuser' => $json[3],
+        ];
+        return [_RESULT => $this->model->insSearch($param)];
     }
 
     //영화 더보기 기능
 
-
+    //인기검색어 백엔드
+    public function selTopSearch() {
+        if(getMethod() === _GET) {
+            $search_total = $this->model->selTopSearch();
+            $search_total = json_decode(json_encode($search_total), true);
+            $keyword = [];
+            $result = [];
+            //검색어 중에 가장 많이 검색한 리스트를 전체 가지고 온다
+            for ($i=0; $i < count($search_total); $i++) { 
+                array_push($keyword, $search_total[$i]['search']);
+            }
+            //그중에 검색 결과가 없는 키워드는 제외하고 result배열에 담는다
+            for ($i=0; $i < count($keyword); $i++) {
+                $param = [
+                    'tag' => $keyword[$i]
+                ];
+                $search_result =json_decode(json_encode($this->model->selTagList($param)), true);
+                if($search_result) {
+                    array_push($result, $keyword[$i]);
+                }
+            }
+            return $result;
+        }
+    }
 
 }
