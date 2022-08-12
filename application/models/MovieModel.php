@@ -134,9 +134,8 @@ class MovieModel extends Model {
     // 영화 키워드 최근순으로 
     public function selSearchKey($param) {
         $sql = "SELECT search, COUNT(search) AS num FROM t_search
-                WHERE search = :search
-                ORDER BY num
-                DESC
+                GROUP BY search
+                ORDER BY num DESC, search_at ASC
         ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":search", $param["search"]);
