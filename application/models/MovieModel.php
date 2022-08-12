@@ -140,6 +140,7 @@ class MovieModel extends Model {
         ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":search", $param["search"]);
+        $stmt->bindValue(":num", $param["num"]);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
