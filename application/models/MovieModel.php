@@ -117,5 +117,9 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    //영화키워드 디비저장하는 백엔드
+    public function insSearch($param) {
+        
+    }
 
 }

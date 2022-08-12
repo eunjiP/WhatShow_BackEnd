@@ -52,7 +52,7 @@
 
             //찾은 결과를 정렬해서 순서대로 영화 정보를 객체 배열화하여 리턴
             $movie_info = [];
-            for ($i=0; $i < 5; $i++) { 
+            for ($i=0; $i < 4; $i++) { 
                 $param = [
                     'movie_code' => $movies_code[$i]['movie_code']
                 ];
