@@ -120,15 +120,15 @@ class MovieModel extends Model {
     //영화키워드 디비저장하는 백엔드
     public function insSearch($param) {
         $sql =" INSERT INTO t_search
-                (search, iuser)
+                (i_search, search, iuser, search_at)
                 VALUE
-                (:search, :iuser)
+                (:i_search, :search, :iuser, :search_at)
         ";
         $stmt = $this->pdo->prepare($sql);
-        // $stmt->bindValue(":i_search", $param["i_search"]);
+        $stmt->bindValue(":i_search", $param["i_search"]);
         $stmt->bindValue(":search", $param["search"]);
         $stmt->bindValue(":iuser", $param["iuser"]);
-        // $stmt->bindValue(":search_at", $param["search_at"]);
+        $stmt->bindValue(":search_at", $param["search_at"]);
         $stmt->execute();
         return $stmt->rowCount();
     }
