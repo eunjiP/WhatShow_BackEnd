@@ -10,6 +10,14 @@ class RecommendModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function selMyTag() {
+        $sql = "SELECT tag FROM t_user
+            WHERE iuser = :iuser";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function selTagList(&$param) {
         $tag = $param['tag'];
         $sql = "SELECT movie_code, count(*) as tagScore FROM t_movies A

@@ -5,13 +5,24 @@
     class RecommendController extends Controller {
         //마이페이지 설정한 태그로 적절한 영화 코드 찾는 함수(결과는 2차 배열로 리턴)
         public function tagRecommend() {
+            $json = getJson();
+            $params = [];
             //마이페이지 태그 리스트 담는 배열($params)
-            $params = [
-                //장르가 1이면 장르별 검색, 0이면 사용자 태그 맞춤추천
-                'genre' => 1,
-                0 => '액션',
-                1 => '애니메이션'
-            ];
+            if($json['iuser']) {
+                $tags = $this->model->selMyTag($json);
+                if(!$tags) {
+                    return 0;
+                }
+                $tags = explode(',', $tags);
+                for ($i=0; $i < count($tags); $i++) { 
+                    $params[$i] = $tags[$i];
+                }
+            } else {
+                for ($i=0; $i < count($json['tag']); $i++) { 
+                    $params[$i] = $json['tag'][$i];
+                }
+            }
+
             //전체 영화 코드
             $movie_total = $this->model->selTotalList();
             //strArray를 객체 배열로 변환하는 방법
@@ -31,13 +42,10 @@
             
             //제목, 나라, 배우, 감독, 줄거리 등에 태그 키워드가 포함되어 있는 수를 점수로 영화 코드 별로 더 해준다
             for ($i=0; $i < count($params)-1; $i++) { 
-                $param = [
-                    'tag' => $params[$i]
-                ];
-                if($params['genre']) {
-                    $result = $this->model->selGenreList($param);
+                if($json['iuser']) {
+                    $result = $this->model->selTagList($params);
                 } else {
-                    $result = $this->model->selTagList($param);
+                    $result = $this->model->selGenreList($params);
                 }
                 $result = json_decode(json_encode($result), true);
                 // print_r($result);

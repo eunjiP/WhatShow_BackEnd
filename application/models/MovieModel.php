@@ -99,7 +99,6 @@ class MovieModel extends Model {
         $stmt->execute();
         return $stmt->rowCount();
     }
-
     
     //키워드 입력시 영화 정보를 검색하는 함수
     public function selSearch(&$param) {
@@ -128,6 +127,7 @@ class MovieModel extends Model {
         return $stmt->rowCount();
     }
 
+    // 최근 검색어 
     public function selTopSearch() {
         $sql = "SELECT search, COUNT(*) AS sCount FROM t_search
             GROUP BY search
