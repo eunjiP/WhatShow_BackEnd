@@ -10,8 +10,6 @@ WhatShow (왓쇼) - Back-end 작업 공간
 - DB 설계 tool : ERD Cloud [:link:ERD Cloud 주소](https://www.erdcloud.com/d/Jhbdz3qkTWXgCwCBY)
 - 라이브러리 : Requests, BeautifulSoup(크롤링)
 - 개발 기간 : 2022.07.25 ~ 2022.08.19
-- 개발팀 : BOAAA (보아)
-- 개발 기간 : 2022.07.22 ~
 - 개발팀 : BOAAA(보아)
 - 역할분담
   - 허영롱 : 검색 API는 내가 맡지! 선택장애 사용자들 나한테 오라구! 내가 PICK해준다고!!
