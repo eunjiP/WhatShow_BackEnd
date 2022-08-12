@@ -34,7 +34,7 @@
                 ];
                 $result = $this->model->selTagList($param);
                 $result = json_decode(json_encode($result), true);
-                print_r($result);
+                // print_r($result);
                 for ($j=0; $j < count($movies_code); $j++) { 
                     for ($z=0; $z < count($result); $z++) { 
                         if($movies_code[$j]['movie_code'] === $result[$z]['movie_code']){
@@ -49,6 +49,16 @@
                 $sort[$key] = $value['score'];
             }
             array_multisort($sort, SORT_DESC, $movies_code);
-            return $movies_code;
+
+            //찾은 결과를 정렬해서 순서대로 영화 정보를 객체 배열화하여 리턴
+            $movie_info = [];
+            for ($i=0; $i < 4; $i++) { 
+                $param = [
+                    'movie_code' => $movies_code[$i]['movie_code']
+                ];
+                array_push($movie_info, $this->model->selMovieCodeInfo($param));
+            }
+            $movie_info = json_decode(json_encode($movie_info), true);
+            return $movie_info;
         }
     }
