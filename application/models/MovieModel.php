@@ -129,6 +129,7 @@ class MovieModel extends Model {
         return $stmt->rowCount();
     }
 
+    // 최근 검색어 
     public function selTopSearch() {
         $sql = "SELECT search, COUNT(*) AS sCount FROM t_search
             GROUP BY search
