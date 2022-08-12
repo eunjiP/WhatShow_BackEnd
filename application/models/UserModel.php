@@ -5,12 +5,12 @@ use PDO;
 class UserModel extends Model{
     //유저정보 가져오기
     public function sel_user(&$param){
-        $sql = "SELECT * FROM t_user A
-                INNER JOIN t_review B
+        $sql = "SELECT A.*, B.i_review, B.ctnt, C.movie_nm, C.movie_code FROM t_user A
+                LEFT JOIN t_review B
                 ON A.iuser = B.iuser
-                INNER JOIN t_movies C
+                LEFT JOIN t_movies C
                 ON B.movie_code = C.movie_code
-                WHERE uuid = :uuid
+                WHERE A.uuid = :uuid
                 ORDER BY B.i_review DESC
                 LIMIT 3";
         $stmt = $this->pdo->prepare($sql);
