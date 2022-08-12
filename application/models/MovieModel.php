@@ -117,16 +117,18 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    // 영화코드로 영화 정보 가져오기
-    public function selMovieCodeInfo(&$param) {     
-        $sql = "SELECT * FROM t_movies
-                WHERE movie_code = :movie_code
+    //영화키워드 디비저장하는 백엔드
+    public function insSearch($param) {
+        $sql =" INSERT INTO t_search
+                (search, iuser)
+                VALUE
+                (:search, :iuser)
         ";
         $stmt = $this->pdo->prepare($sql);
-        $stmt -> bindValue(":movie_code", $param["movie_code"]);
-        $stmt -> execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt->bindValue(":search", $param["keyword"]);
+        $stmt->bindValue(":iuser", $param["iuser"]);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
-
 
 }

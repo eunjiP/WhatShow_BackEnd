@@ -36,7 +36,7 @@ class MovieController extends Controller {
     public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
         $targetDt = $param['targetDt'];
-        // $targetDt = '20220809';
+        // $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -67,14 +67,13 @@ class MovieController extends Controller {
                 fclose($myfile);
 
                 //은지
-                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영은
                 // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
-                //영롱
-                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
-                //경식
-                // exec('C:\Python\Python38\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
-            
+                // 영롱
+                exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 
                 $f_story = file("movie_story.txt");
                 $story = '';
@@ -263,10 +262,22 @@ class MovieController extends Controller {
         $param = [
             'keyword' => $url[2], 'movielimit' => $url[3]
         ];
+        
         return $this->model->selSearch($param);
     }
 
+    public function insSearch() {
+        $json = getUrlPaths();
+        $param = [
+            'keyword' => $json[2],
+            'iuser' => $json[3],
+        ];
+        return [_RESULT => $this->model->insSearch($param)];
+    }
+
     //영화 더보기 기능
+
+    
 
 
 
