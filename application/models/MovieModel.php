@@ -136,6 +136,7 @@ class MovieModel extends Model {
         $sql = "SELECT search, COUNT(search) AS num FROM t_search
                 WHERE search = :search
                 ORDER BY num
+                DESC
         ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":search", $param["search"]);
