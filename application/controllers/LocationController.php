@@ -31,5 +31,12 @@ class LocationController extends Controller {
         return $this->model->optionList2($param);
     }
 
+    // 현재 위치 주소값 
+    public function recentLocation() {
+        $json = getUrlPaths();
+        $param = [
+            'my_addr' => end($json)
+        ];
+    }
 
 }
