@@ -60,4 +60,23 @@
                     return [_RESULT => $this->model->changeRecommend($param)];
             }
         }
+        //대댓글 리스트
+        public function reviewListCmt(){
+            $getUrl = getUrlPaths();
+            $param = [
+                'i_review' => $getUrl[2]
+            ];
+            return $this->model->reviewListCmt($param);
+        }
+
+        //대댓글 작성
+        public function insCmt(){
+            $getUrl = getUrlPaths();
+            $param = [
+                'i_review' => $getUrl[2],
+                'comment_cnt' => $getUrl[3],
+                'iuser' => $getUrl[4]
+            ];
+            return $this->model->insCmt($param);
+        }
     }
