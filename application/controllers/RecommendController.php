@@ -120,7 +120,6 @@
                 ];
                 $r = json_decode(json_encode($this->model->selMovieCodeInfo($p)), true);
                 array_push($result, $r);
-                array_push($result_code, $r['movie_code']);
                 array_push($movie_genre, $r['movie_genre']);
             }
             // print_r($result_code);
@@ -182,7 +181,7 @@
                     array_splice($movies_code[$i], $str, 1);
                 }
             }
-            for ($i=0; $i < count($movies_code); $i++) {
+            for ($i=0; $i < 4; $i++) {
                 if($movies_code[$i]['score'] > 0) {
                     $param = [
                         'movie_code' => $movies_code[$i]['movie_code']
