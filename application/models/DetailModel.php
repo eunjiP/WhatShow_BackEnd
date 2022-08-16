@@ -96,12 +96,12 @@
             $sql = "INSERT INTO t_comment
                     (i_review, iuser, comment_cnt)
                     VALUE
-                    (:ireview, :iuser, :comment_cnt)";
+                    (:i_review, :iuser, :comment_cnt)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":i_review", $param['i_review']);
             $stmt->bindValue(":iuser", $param['iuser']);
             $stmt->bindValue(":comment_cnt", $param['comment_cnt']);
             $stmt->execute();
-            return intval($this->pdo->lastInsertId());
+            return $stmt->rowCount();
         }
     }
