@@ -36,7 +36,7 @@ class MovieController extends Controller {
     public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
         $targetDt = $param['targetDt'];
-        // $targetDt = '20220814';
+        // $targetDt = '20220810';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -69,7 +69,7 @@ class MovieController extends Controller {
                 //은지
                 // exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영은
-                //  exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
+                // exec('C:\python\python38\python.exe C:\Apache24\WhatShowBackEnd\application\controllers\movieSummary.py');
                 //영롱
                 exec('C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe C:\Apache24\WhatShow_BackEnd\application\controllers\movieSummary.py');
                 //경식
@@ -118,26 +118,8 @@ class MovieController extends Controller {
         // //영화코드
         // $code = '191634';
         // //지역코드
-        if(!empty($_GET['my_addr'])) {
-            $myaddr = explode(' ', $_GET['my_addr']);
-            $param = [
-                'my_addr_root' => $myaddr[0],
-                'my_addr_sub' => $myaddr[1]
-            ];
-            $result = json_decode(json_encode($this->model->selRootRegionCode($param)), true);
-            // print_r($result);
-            if($result['subCount'] === 1) {
-                $regionRootCode = $result['root_code'];
-                $regionSubCode = $result['sub_code'];
-            } else {
-                $root_sub_code = $this->model->selSubRegionCode($param);
-                $regionRootCode = $root_sub_code['root_code'];
-                $regionSubCode = $root_sub_code['sub_code'];
-            }
-        } else {
-            $regionRootCode = $_GET['rootCode'];
-            $regionSubCode = $_GET['subCode'];
-        }
+        $regionRootCode = $_GET['rootCode'];
+        $regionSubCode = $_GET['subCode'];
         // //조회하는 시간
         // $reserveDate = '2022-08-06';
         $code = $_GET['code'];
@@ -158,10 +140,8 @@ class MovieController extends Controller {
         curl_close($ch);
 
         if($stat === 200) {
-            // $res = json_decode(json_encode($res), true);
             $res = json_decode($res, true);
             return $res['groupScheduleList'];
-            // return $res;
         } else {
             echo "Error 내용 : " . $res;
         }
