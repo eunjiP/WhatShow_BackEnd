@@ -153,4 +153,25 @@ class MovieModel extends Model {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    //주소를 root, sub 코드로 변경하는 함수
+    public function selRootRegionCode(&$param) {
+        $my_addr_root = $param['my_addr_root'];
+        $sql = "SELECT A.root_code, count(B.sub_code) AS subCount, B.sub_code FROM region_code A
+        INNER JOIN subregion_code B
+        ON A.root_code = B.root_code
+        WHERE A.region_nm like '%$my_addr_root%'";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function selSubRegionCode(&$param) {
+        $my_addr_root = $param['my_addr_root'];
+        $my_addr_sub = $param['my_addr_sub'];
+        $sql = "SELECT sub_code FROM subregion_code
+        WHERE sub_nm LIKE '%$my_addr_sub%' AND root_code = $my_addr_root";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 }
