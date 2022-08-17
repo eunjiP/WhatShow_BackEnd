@@ -89,12 +89,10 @@ class MovieModel extends Model {
     //포스터, 줄거리 업데이브 함수
     public function updateMovies(&$param) {
         $sql = "INSERT INTO t_movies SET movie_code = :movie_code, movie_nm = :movie_nm
-        ON DUPLICATE KEY UPDATE movie_poster = :movie_poster,
-        movie_summary = :movie_summary";
+        ON DUPLICATE KEY UPDATE movie_summary = :movie_summary";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":movie_code", $param['movie_code']);
         $stmt->bindValue(":movie_nm", $param['movie_nm']);
-        $stmt->bindValue(":movie_poster", $param['movie_poster']);
         $stmt->bindValue(":movie_summary", $param['movie_summary']);
         $stmt->execute();
         return $stmt->rowCount();
