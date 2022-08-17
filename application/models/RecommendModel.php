@@ -4,23 +4,34 @@ use PDO;
 
 class RecommendModel extends Model {
     public function selTotalList() {
-        $sql = "SELECT movie_code FROM t_movies A";
+        $sql = "SELECT movie_code FROM t_movies";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function selMyTag() {
+    //특정 영화를 제외한 영화의 전체 리스트
+    public function selTagMovieList(&$param) {
+        $sql = "SELECT movie_code FROM t_movies
+        WHERE movie_code <> :movie_code";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":movie_code", $param["movie_code"]);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function selMyTag(&$param) {
         $sql = "SELECT tag FROM t_user
             WHERE iuser = :iuser";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":iuser", $param["iuser"]);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function selTagList(&$param) {
         $tag = $param['tag'];
-        $sql = "SELECT movie_code, count(*) as tagScore FROM t_movies A
+        $sql = "SELECT movie_code, count(*) as tagScore FROM t_movies
         WHERE movie_nm LIKE '%$tag%' OR
         movie_genre LIKE '%$tag%' OR
         country LIKE '%$tag%' OR
@@ -45,7 +56,7 @@ class RecommendModel extends Model {
 
     //장르(체크박스) 체크 후 검색하기
     public function selGenreList(&$param) {
-        $genre = $param['tag'];
+        $genre = $param['genre'];
         $sql = "SELECT movie_code, count(*) as tagScore FROM t_movies
                 WHERE movie_genre LIKE '%$genre%'
                 GROUP BY movie_code";

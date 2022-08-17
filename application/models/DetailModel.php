@@ -78,4 +78,30 @@
             $stmt->execute();
             return $stmt->rowCount();
         }
+
+        //대댓글 리스트
+        public function reviewListCmt(&$param){
+            $sql = "SELECT B.nickname, A.comment_cnt, A.create_at  FROM t_comment A
+                    INNER JOIN t_user B
+                    ON A.iuser = B.iuser
+                    WHERE i_review = :i_review";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(":i_review", $param['i_review']);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        //대댓글 작성
+        public function insCmt(&$param){
+            $sql = "INSERT INTO t_comment
+                    (i_review, iuser, comment_cnt)
+                    VALUE
+                    (:i_review, :iuser, :comment_cnt)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(":i_review", $param['i_review']);
+            $stmt->bindValue(":iuser", $param['iuser']);
+            $stmt->bindValue(":comment_cnt", $param['comment_cnt']);
+            $stmt->execute();
+            return $stmt->rowCount();
+        }
     }
