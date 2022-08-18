@@ -316,6 +316,7 @@ class MovieController extends Controller {
                     array_push($result, $keyword[$i]);
                 }
             }
+            $result = array_slice($result, 0, 5);
             return $result;
         }
     }
