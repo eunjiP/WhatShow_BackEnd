@@ -92,9 +92,11 @@
         //키워드 검색 결과 백엔드
         public function movieSearch() {
             $param = [
-                'tag' => $_GET['keyword']
+                'tag' => $_GET['keyword'],
+                'iuser' => $_GET['iuser']
             ];
             $result = [];
+            $this->model->insSearch($param);
             $movie = json_decode(json_encode($this->model->selTagList($param)), true);
             for ($i=0; $i < count($movie); $i++) { 
                 $p = [
