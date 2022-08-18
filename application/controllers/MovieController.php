@@ -36,7 +36,7 @@ class MovieController extends Controller {
     public function boxOffice(&$param) {
         $key = 'de024e41172ba2b7f13cb5d286ad1162';
         $targetDt = $param['targetDt'];
-        // $targetDt = '20220810';
+        // $targetDt = '20211001';
         $url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=' . $key . '&targetDt=' . $targetDt;
         $is_post = false;
 
@@ -100,12 +100,10 @@ class MovieController extends Controller {
                     'movie_summary' => $story
                 ];
                 $this->model->insBoxoffice($param);
-                print_r($param);
-                print_r($movie_param);
+                // print_r($param);
+                // print_r($movie_param);
                 if(!$this->model->selMovies($movie_param)) {
                     print_r($this->model->insMovies($movie_param));
-                } else {
-                    print_r($this->model->updateMovies($movie_param));
                 }
             }
         } else {
@@ -318,6 +316,7 @@ class MovieController extends Controller {
                     array_push($result, $keyword[$i]);
                 }
             }
+            $result = array_slice($result, 0, 5);
             return $result;
         }
     }
