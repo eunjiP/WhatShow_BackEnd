@@ -1,7 +1,7 @@
 WhatShow (왓쇼) - Back-end 작업 공간
 =====
 ## BOAAA
-<img src="![로고](https://user-images.githubusercontent.com/101936519/185729612-9ea98b16-7dc0-4777-ad31-5e38d46f2520.png)">
+<img src="https://user-images.githubusercontent.com/101936519/185729612-9ea98b16-7dc0-4777-ad31-5e38d46f2520.png">
 
 주제
 ------
@@ -32,25 +32,25 @@ WhatShow (왓쇼) - Back-end 작업 공간
   
 |메인|메인 하단|
 |-------------|------------|
-|<img src="![메인](https://user-images.githubusercontent.com/101936519/185729661-704e2860-ff63-42d6-98b8-57c1f2f74990.jpg)">|<img src="![메인영화시간확인](https://user-images.githubusercontent.com/101936519/185729674-847ecad8-0222-4086-9692-fe149da50d17.jpg)">|
+|<img src="https://user-images.githubusercontent.com/101936519/185729661-704e2860-ff63-42d6-98b8-57c1f2f74990.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729674-847ecad8-0222-4086-9692-fe149da50d17.jpg">|
 
 |위치 설정|위치 설정 - 수동|
 |-------------|------------|
-|<img src="![현재위치설정](https://user-images.githubusercontent.com/101936519/185729724-1e03b5e8-ae9b-41a7-803c-1a39248ad876.jpg)">|<img src="![수동위치설정](https://user-images.githubusercontent.com/101936519/185729713-a8ee62a9-0feb-4ee6-963a-8d56ea401b46.jpg)">|
+|<img src="https://user-images.githubusercontent.com/101936519/185729724-1e03b5e8-ae9b-41a7-803c-1a39248ad876.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729713-a8ee62a9-0feb-4ee6-963a-8d56ea401b46.jpg">|
 
 |마이 페이지|상세 검색|
 |-------------|------------|
-|<img src="![마이페이지](https://user-images.githubusercontent.com/101936519/185729741-69deb851-7817-4089-84ad-b3cacc53ff1f.jpg)">|<img src="![상세검색](https://user-images.githubusercontent.com/101936519/185729746-e9ba252e-029e-4ddb-91e2-899131d16945.jpg)">|
+|<img src="https://user-images.githubusercontent.com/101936519/185729741-69deb851-7817-4089-84ad-b3cacc53ff1f.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729746-e9ba252e-029e-4ddb-91e2-899131d16945.jpg">|
 
 
 |검색 결과 페이지|영화 상세 페이지|
 |-------------|------------|
-|<img src="![검색결과-통합](https://user-images.githubusercontent.com/101936519/185729770-3151b70d-0646-4d9b-8b5d-5e435e7675d1.jpg)">|<img src="![상세페이지](https://user-images.githubusercontent.com/101936519/185729792-c0aa0224-2e12-4fe3-9e5b-54232d67a47d.jpg)">|
+|<img src="https://user-images.githubusercontent.com/101936519/185729770-3151b70d-0646-4d9b-8b5d-5e435e7675d1.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729792-c0aa0224-2e12-4fe3-9e5b-54232d67a47d.jpg">|
 
 |상세 페이지 - 오늘 영화 시간|상세 페이지 - 다른 날짜 영화 스케줄 확인|
 |-------------|------------|
-|<img src="![상세_오늘영화시간](https://user-images.githubusercontent.com/101936519/185729814-3e59f16a-3610-4d22-8dbc-9cbaa6989be5.jpg)">|<img src="![상세_다른날짜영화스케줄확인](https://user-images.githubusercontent.com/101936519/185729823-f6d815b8-28de-4b39-b149-1fa5b0141f15.jpg)">|
+|<img src="https://user-images.githubusercontent.com/101936519/185729814-3e59f16a-3610-4d22-8dbc-9cbaa6989be5.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729823-f6d815b8-28de-4b39-b149-1fa5b0141f15.jpg">|
 
 |댓글 정상 등록|내용 없이 등록|별점 없이 등록|
 |-------------|------------|------------|
-|<img src="![리뷰정상등록](https://user-images.githubusercontent.com/101936519/185729862-bd5f5ef2-7605-40cf-9fbe-ad40cb191468.jpg)">|<img src="![리뷰내용없음](https://user-images.githubusercontent.com/101936519/185729868-009031d5-f68f-46dc-9c94-244ec54d1bf2.jpg)">|<img src="![리뷰별점없음](https://user-images.githubusercontent.com/101936519/185729877-981a6f7f-ccd4-4d7b-bc56-adecd1968b65.jpg)">|
+|<img src="https://user-images.githubusercontent.com/101936519/185729862-bd5f5ef2-7605-40cf-9fbe-ad40cb191468.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729868-009031d5-f68f-46dc-9c94-244ec54d1bf2.jpg">|<img src="https://user-images.githubusercontent.com/101936519/185729877-981a6f7f-ccd4-4d7b-bc56-adecd1968b65.jpg">|
