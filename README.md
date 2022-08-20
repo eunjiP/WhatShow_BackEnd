@@ -1,11 +1,11 @@
 WhatShow (왓쇼) - Back-end 작업 공간
 =====
 ## BOAAA
-<img src="https://user-images.githubusercontent.com/101936519/185729612-9ea98b16-7dc0-4777-ad31-5e38d46f2520.png">
+<img src="https://user-images.githubusercontent.com/101936519/185729612-9ea98b16-7dc0-4777-ad31-5e38d46f2520.png" width=200px>
 
 주제
 ------
-** 🎥영화 정보 통합 서비스 **
+**🎥영화 정보 통합 서비스**
 
 - 사용언어 : HTML5, CSS3, PHP, JavaScript, Python, Vue.js
 
