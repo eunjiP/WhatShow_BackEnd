@@ -1,6 +1,5 @@
-WhatShow (왓쇼) - Back-end 작업 공간
+프로젝트명 : 왓쇼(What Show)
 =====
-## BOAAA
 <img src="https://user-images.githubusercontent.com/101936519/185729612-9ea98b16-7dc0-4777-ad31-5e38d46f2520.png" width=200px>
 
 주제
